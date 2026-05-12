@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Conversazioni">
+<meta name="apple-mobile-web-app-title" content="Palombari">
 <meta name="theme-color" content="#1a1a2e">
-<title>Conversazioni</title>
+<title>Palombari</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -38,7 +38,6 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* ── Background orbs ── */
   .bg-orb {
     position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
     filter: blur(80px); opacity: 0.25;
@@ -47,13 +46,9 @@
   .orb2 { width: 250px; height: 250px; background: var(--bg3); bottom: 100px; left: -60px; }
   .orb3 { width: 180px; height: 180px; background: var(--accent2); top: 40%; right: -40px; opacity: 0.15; }
 
-  /* ── Layout ── */
   .app { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 0 20px; }
 
-  header {
-    padding: 60px 0 24px;
-    text-align: center;
-  }
+  header { padding: 60px 0 24px; text-align: center; }
   .app-icon-wrap { margin-bottom: 14px; }
   .app-icon {
     width: 72px; height: 72px; border-radius: 18px;
@@ -61,16 +56,22 @@
     display: inline-flex; align-items: center; justify-content: center;
     font-size: 36px; box-shadow: 0 8px 32px rgba(233,69,96,0.35);
   }
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px; font-weight: 600; letter-spacing: 0.5px;
-    color: var(--text);
-  }
-  .subtitle {
-    font-size: 14px; color: var(--text2); margin-top: 4px; font-weight: 300; letter-spacing: 1px;
-  }
+  h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; letter-spacing: 0.5px; color: var(--text); }
+  .subtitle { font-size: 14px; color: var(--text2); margin-top: 4px; font-weight: 300; letter-spacing: 1px; }
 
-  /* ── Main card ── */
+  .sync-bar {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 12px; color: var(--text2); margin-bottom: 16px; height: 20px;
+  }
+  .sync-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--text2);
+    transition: background 0.3s;
+  }
+  .sync-dot.ok { background: #4caf50; }
+  .sync-dot.err { background: var(--accent); }
+  .sync-dot.loading { background: var(--accent2); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
   .main-card {
     background: var(--card); border: 1px solid var(--card-border);
     border-radius: var(--radius); padding: 32px 24px; margin-bottom: 16px;
@@ -82,21 +83,13 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; gap: 8px;
   }
-  .topic-label {
-    font-size: 11px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase;
-    font-weight: 700;
-  }
+  .topic-label { font-size: 11px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; font-weight: 700; }
   .topic-text {
     font-family: 'Playfair Display', serif;
-    font-size: 28px; line-height: 1.3; color: var(--text);
-    font-style: italic;
+    font-size: 26px; line-height: 1.3; color: var(--text); font-style: italic;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
-  .topic-text.empty {
-    font-size: 16px; color: var(--text2); font-style: normal;
-    font-family: 'Lato', sans-serif; font-weight: 300;
-  }
-  .topic-text.animating { opacity: 0; transform: translateY(8px); }
+  .topic-text.empty { font-size: 15px; color: var(--text2); font-style: normal; font-family: 'Lato', sans-serif; font-weight: 300; }
 
   .remaining-badge {
     font-size: 12px; color: var(--text2);
@@ -104,65 +97,46 @@
     padding: 4px 14px; margin-top: 4px;
   }
 
-  /* ── Extract button ── */
   .btn-extract {
     width: 100%; padding: 18px;
-    background: var(--accent);
-    border: none; border-radius: var(--radius-sm);
+    background: var(--accent); border: none; border-radius: var(--radius-sm);
     color: white; font-family: 'Lato', sans-serif;
     font-size: 16px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
     cursor: pointer; margin-top: 24px;
     box-shadow: 0 4px 24px rgba(233,69,96,0.4);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
-    position: relative; overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .btn-extract:active { transform: scale(0.97); box-shadow: 0 2px 12px rgba(233,69,96,0.3); }
-  .btn-extract:disabled {
-    background: #444; box-shadow: none; cursor: default; color: #888;
-  }
+  .btn-extract:active { transform: scale(0.97); }
+  .btn-extract:disabled { background: #444; box-shadow: none; cursor: default; color: #888; }
   .btn-extract .btn-inner { display: flex; align-items: center; justify-content: center; gap: 10px; }
-  .spin { display: none; }
-  .btn-extract.spinning .spin { display: inline-block; animation: spin 0.6s linear infinite; }
+  .spin { display: none; animation: spin 0.6s linear infinite; }
+  .btn-extract.spinning .spin { display: inline-block; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── Section tiles ── */
   .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-
   .tile {
     background: var(--card); border: 1px solid var(--card-border);
     border-radius: var(--radius-sm); padding: 16px;
-    cursor: pointer; transition: background 0.2s;
-    backdrop-filter: blur(8px);
+    cursor: pointer; transition: background 0.2s; backdrop-filter: blur(8px);
   }
   .tile:active { background: rgba(255,255,255,0.1); }
   .tile-icon { font-size: 22px; margin-bottom: 6px; }
-  .tile-count {
-    font-size: 22px; font-weight: 700;
-    font-family: 'Playfair Display', serif; color: var(--text);
-  }
+  .tile-count { font-size: 22px; font-weight: 700; font-family: 'Playfair Display', serif; color: var(--text); }
   .tile-name { font-size: 11px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
   .tile.accent-tile { border-color: rgba(233,69,96,0.4); }
   .tile-count.accent { color: var(--accent); }
 
-  /* ── Add button ── */
   .btn-add {
     width: 100%; padding: 15px;
     background: transparent; border: 1px solid var(--card-border);
     border-radius: var(--radius-sm); color: var(--text);
-    font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 400;
+    font-family: 'Lato', sans-serif; font-size: 14px;
     cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: background 0.2s, border-color 0.2s;
-    backdrop-filter: blur(8px);
-    margin-bottom: 16px;
+    transition: background 0.2s; backdrop-filter: blur(8px); margin-bottom: 16px;
   }
   .btn-add:active { background: rgba(255,255,255,0.06); }
-  .btn-add svg { opacity: 0.6; }
 
-  /* ── Drawer / Sheet ── */
-  .overlay {
-    display: none; position: fixed; inset: 0; z-index: 100;
-    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-  }
+  .overlay { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
   .overlay.open { display: block; }
 
   .sheet {
@@ -175,17 +149,9 @@
     border-top: 1px solid var(--card-border);
   }
   .sheet.open { transform: translateY(0); }
+  .sheet-handle { width: 40px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 12px auto 20px; }
+  .sheet-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 20px; color: var(--text); }
 
-  .sheet-handle {
-    width: 40px; height: 4px; background: rgba(255,255,255,0.2);
-    border-radius: 2px; margin: 12px auto 20px;
-  }
-  .sheet-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px; margin-bottom: 20px; color: var(--text);
-  }
-
-  /* List items */
   .topic-list { list-style: none; }
   .topic-item {
     display: flex; align-items: center; gap: 12px;
@@ -193,52 +159,37 @@
     animation: fadeIn 0.25s ease;
   }
   .topic-item:last-child { border-bottom: none; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-  .topic-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-    background: var(--accent);
-  }
+  .topic-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--accent); }
   .topic-dot.done { background: var(--text2); }
   .topic-item-text { flex: 1; font-size: 15px; color: var(--text); font-weight: 300; }
   .topic-item-text.done { color: var(--text2); text-decoration: line-through; }
 
-  .btn-del {
-    background: none; border: none; cursor: pointer;
-    color: var(--text2); padding: 4px; border-radius: 6px;
-    transition: color 0.15s; display: flex;
-    opacity: 0.5;
-  }
+  .btn-del { background: none; border: none; cursor: pointer; color: var(--text2); padding: 4px; border-radius: 6px; opacity: 0.5; display: flex; }
   .btn-del:active { color: var(--accent); opacity: 1; }
 
   .empty-list { text-align: center; padding: 32px 0; color: var(--text2); font-size: 14px; font-weight: 300; }
 
-  /* ── Add form (inside sheet) ── */
   .add-form { display: flex; gap: 10px; margin-bottom: 20px; }
   .add-input {
     flex: 1; background: rgba(255,255,255,0.08); border: 1px solid var(--card-border);
     border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text);
     font-family: 'Lato', sans-serif; font-size: 15px; outline: none;
-    transition: border-color 0.2s;
   }
   .add-input::placeholder { color: var(--text2); }
   .add-input:focus { border-color: var(--accent); }
   .btn-confirm {
     background: var(--accent); border: none; border-radius: var(--radius-sm);
-    padding: 12px 18px; color: white; font-size: 15px; cursor: pointer;
-    font-weight: 700; transition: transform 0.15s;
+    padding: 12px 18px; color: white; font-size: 15px; cursor: pointer; font-weight: 700;
   }
   .btn-confirm:active { transform: scale(0.95); }
 
-  /* ── Settings sheet ── */
   .settings-grid { display: grid; gap: 14px; }
   .setting-row { display: flex; flex-direction: column; gap: 8px; }
   .setting-label { font-size: 12px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; }
   .color-picker-wrap { display: flex; align-items: center; gap: 12px; }
-  input[type=color] {
-    width: 44px; height: 44px; border: none; border-radius: 10px;
-    cursor: pointer; background: none; padding: 2px;
-  }
+  input[type=color] { width: 44px; height: 44px; border: none; border-radius: 10px; cursor: pointer; background: none; padding: 2px; }
   .color-name { font-size: 14px; color: var(--text); }
   .setting-input {
     background: rgba(255,255,255,0.08); border: 1px solid var(--card-border);
@@ -246,25 +197,16 @@
     font-size: 15px; outline: none; font-family: 'Lato', sans-serif;
   }
   .setting-input:focus { border-color: var(--accent); }
-
   .emoji-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; }
-  .emoji-btn {
-    background: rgba(255,255,255,0.06); border: 1px solid transparent;
-    border-radius: 10px; padding: 8px; font-size: 22px; cursor: pointer;
-    text-align: center; transition: border-color 0.15s;
-  }
+  .emoji-btn { background: rgba(255,255,255,0.06); border: 1px solid transparent; border-radius: 10px; padding: 8px; font-size: 22px; cursor: pointer; text-align: center; }
   .emoji-btn.selected { border-color: var(--accent); background: rgba(233,69,96,0.15); }
   .emoji-btn:active { transform: scale(0.92); }
-
   .btn-save-settings {
     width: 100%; margin-top: 20px; padding: 14px;
     background: var(--accent); border: none; border-radius: var(--radius-sm);
-    color: white; font-size: 15px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; cursor: pointer;
+    color: white; font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
   }
-  .btn-save-settings:active { transform: scale(0.98); }
 
-  /* ── Nav bar ── */
   nav {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
     background: rgba(15,15,30,0.9); backdrop-filter: blur(20px);
@@ -276,15 +218,12 @@
     background: none; border: none; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; gap: 4px;
     color: var(--text2); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase;
-    padding: 6px 20px; border-radius: 10px; transition: color 0.15s;
-    font-family: 'Lato', sans-serif;
+    padding: 6px 20px; border-radius: 10px; font-family: 'Lato', sans-serif;
   }
-  .nav-btn svg { transition: color 0.15s; }
   .nav-btn.active { color: var(--accent); }
 
   .page-padding { padding-bottom: 100px; }
 
-  /* ── Toast ── */
   .toast {
     position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
     background: rgba(30,30,56,0.95); border: 1px solid var(--card-border);
@@ -297,6 +236,13 @@
 </head>
 <body>
 
+<script>
+  // !! PASTE YOUR CREDENTIALS BELOW — do not share this file after editing !!
+  const API_KEY  = 'PASTE_YOUR_API_KEY_HERE';
+  const SHEET_ID = 'PASTE_YOUR_SHEET_ID_HERE';
+  const SHEET_NAME = 'Topics';
+</script>
+
 <div class="bg-orb orb1"></div>
 <div class="bg-orb orb2"></div>
 <div class="bg-orb orb3"></div>
@@ -306,47 +252,48 @@
     <div class="app-icon-wrap">
       <div class="app-icon" id="appIcon">💬</div>
     </div>
-    <h1 id="appTitle">Conversazioni</h1>
+    <h1 id="appTitle">Palombari</h1>
     <p class="subtitle" id="appSubtitle">pick a topic, start a story</p>
   </header>
 
-  <!-- Main card -->
+  <div class="sync-bar">
+    <div class="sync-dot loading" id="syncDot"></div>
+    <span id="syncText">Connecting…</span>
+  </div>
+
   <div class="main-card">
     <div class="topic-display">
       <span class="topic-label">current topic</span>
       <div class="topic-text empty" id="topicDisplay">Tap the button to pick a topic</div>
       <div class="remaining-badge" id="remainingBadge" style="display:none"></div>
     </div>
-    <button class="btn-extract" id="btnExtract" onclick="extractTopic()">
+    <button class="btn-extract" id="btnExtract" onclick="extractTopic()" disabled>
       <div class="btn-inner">
         <svg class="spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg>
-        <span id="btnText">✦ Pick a Topic</span>
+        <span id="btnText">Loading…</span>
       </div>
     </button>
   </div>
 
-  <!-- Tiles -->
   <div class="tiles">
     <div class="tile accent-tile" onclick="openSheet('available')">
       <div class="tile-icon">📋</div>
-      <div class="tile-count accent" id="availableCount">0</div>
+      <div class="tile-count accent" id="availableCount">–</div>
       <div class="tile-name">Available</div>
     </div>
     <div class="tile" onclick="openSheet('discussed')">
       <div class="tile-icon">✅</div>
-      <div class="tile-count" id="discussedCount">0</div>
+      <div class="tile-count" id="discussedCount">–</div>
       <div class="tile-name">Discussed</div>
     </div>
   </div>
 
-  <!-- Add button -->
   <button class="btn-add" onclick="openSheet('add')">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
     Add a new topic
   </button>
 </div>
 
-<!-- Nav bar -->
 <nav>
   <button class="nav-btn active" onclick="scrollToTop()">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
@@ -366,61 +313,52 @@
   </button>
 </nav>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay" onclick="closeSheet()"></div>
 
-<!-- Sheet: Available topics -->
 <div class="sheet" id="sheetAvailable">
   <div class="sheet-handle"></div>
   <div class="sheet-title">Available Topics</div>
   <div class="add-form">
-    <input class="add-input" id="addInputTop" placeholder="New topic…" maxlength="80" onkeydown="if(event.key==='Enter')addTopicFromInput('addInputTop')">
-    <button class="btn-confirm" onclick="addTopicFromInput('addInputTop')">+</button>
+    <input class="add-input" id="addInputTop" placeholder="New topic…" maxlength="80" onkeydown="if(event.key==='Enter')addTopic('addInputTop')">
+    <button class="btn-confirm" onclick="addTopic('addInputTop')">+</button>
   </div>
   <ul class="topic-list" id="availableList"></ul>
 </div>
 
-<!-- Sheet: Discussed topics -->
 <div class="sheet" id="sheetDiscussed">
   <div class="sheet-handle"></div>
   <div class="sheet-title">Discussed Topics</div>
   <ul class="topic-list" id="discussedList"></ul>
 </div>
 
-<!-- Sheet: Add topic -->
 <div class="sheet" id="sheetAdd">
   <div class="sheet-handle"></div>
   <div class="sheet-title">Add a Topic</div>
   <div class="add-form">
-    <input class="add-input" id="addInputMain" placeholder="e.g. Childhood dreams…" maxlength="80" onkeydown="if(event.key==='Enter')addTopicFromInput('addInputMain')">
-    <button class="btn-confirm" onclick="addTopicFromInput('addInputMain')">+</button>
+    <input class="add-input" id="addInputMain" placeholder="e.g. Childhood dreams…" maxlength="80" onkeydown="if(event.key==='Enter')addTopic('addInputMain')">
+    <button class="btn-confirm" onclick="addTopic('addInputMain')">+</button>
   </div>
   <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-top:8px;font-weight:300;">
-    Add topics you'd like to discuss with your conversation partner. They'll be picked at random and moved to history once used.
+    Topics are shared between both phones in real time via Google Sheets.
   </p>
 </div>
 
-<!-- Sheet: Settings / Style -->
 <div class="sheet" id="sheetSettings">
   <div class="sheet-handle"></div>
   <div class="sheet-title">Personalise</div>
   <div class="settings-grid">
-
     <div class="setting-row">
       <span class="setting-label">App Name</span>
-      <input class="setting-input" id="settingTitle" placeholder="Conversazioni" maxlength="30">
+      <input class="setting-input" id="settingTitle" placeholder="Palombari" maxlength="30">
     </div>
-
     <div class="setting-row">
       <span class="setting-label">Tagline</span>
       <input class="setting-input" id="settingSubtitle" placeholder="pick a topic, start a story" maxlength="50">
     </div>
-
     <div class="setting-row">
       <span class="setting-label">App Icon</span>
       <div class="emoji-grid" id="emojiGrid"></div>
     </div>
-
     <div class="setting-row">
       <span class="setting-label">Accent Colour</span>
       <div class="color-picker-wrap">
@@ -428,7 +366,6 @@
         <span class="color-name">Button &amp; highlights</span>
       </div>
     </div>
-
     <div class="setting-row">
       <span class="setting-label">Background Colour</span>
       <div class="color-picker-wrap">
@@ -436,109 +373,170 @@
         <span class="color-name">App background</span>
       </div>
     </div>
-
   </div>
   <button class="btn-save-settings" onclick="saveSettings()">Save &amp; Apply</button>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Data ──
-function load(key, fallback) {
-  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
-}
-function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+const BASE = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}`;
 
-let available = load('topics_available', [
-  'What was your most embarrassing moment?',
-  'If you could live anywhere in the world, where?',
-  'What was the happiest day of your life?',
-  'What's something you've always wanted to learn?',
-  'Describe your perfect Sunday',
-  'What's a belief you've changed your mind about?',
-]);
-let discussed = load('topics_discussed', []);
-let settings  = load('app_settings', {
-  title: 'Conversazioni',
-  subtitle: 'pick a topic, start a story',
-  icon: '💬',
-  accent: '#e94560',
-  bg: '#1a1a2e',
-});
-
+let available = [], discussed = [];
+let settings = JSON.parse(localStorage.getItem('app_settings') || 'null') || {
+  title: 'Palombari', subtitle: 'pick a topic, start a story',
+  icon: '💬', accent: '#e94560', bg: '#1a1a2e'
+};
 const EMOJIS = ['💬','❤️','🌙','✨','🎲','📖','🌿','🎭','🔮','🌊','🎨','🎵','🌸','🦋','☕','🌟'];
 
-// ── Init ──
-function init() {
-  applySettings(false);
-  renderAvailable();
-  renderDiscussed();
-  updateCounts();
-  populateSettingsForm();
+function setSyncStatus(state, text) {
+  document.getElementById('syncDot').className = 'sync-dot ' + state;
+  document.getElementById('syncText').textContent = text;
 }
 
-// ── Extract ──
-function extractTopic() {
-  if (available.length === 0) {
-    showToast('No topics left to pick!');
-    return;
+async function sheetRead() {
+  const r = await fetch(`${BASE}?key=${API_KEY}`);
+  if (!r.ok) throw new Error('Read failed');
+  const d = await r.json();
+  const rows = d.values || [];
+  const av = [], di = [];
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i] && rows[i][0] && rows[i][0].trim()) av.push(rows[i][0].trim());
+    if (rows[i] && rows[i][1] && rows[i][1].trim()) di.push(rows[i][1].trim());
   }
+  return { available: av, discussed: di };
+}
+
+async function sheetWrite(av, di) {
+  const maxLen = Math.max(av.length, di.length, 1);
+  const values = [['available', 'discussed']];
+  for (let i = 0; i < maxLen; i++) values.push([av[i] || '', di[i] || '']);
+  const r = await fetch(`${BASE}?valueInputOption=RAW&key=${API_KEY}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ range: SHEET_NAME, majorDimension: 'ROWS', values })
+  });
+  if (!r.ok) throw new Error('Write failed');
+}
+
+async function loadFromSheet() {
+  setSyncStatus('loading', 'Syncing…');
+  try {
+    const data = await sheetRead();
+    available = data.available;
+    discussed = data.discussed;
+    renderAll();
+    setSyncStatus('ok', 'Synced with Google Sheets');
+    const btn = document.getElementById('btnExtract');
+    btn.disabled = available.length === 0;
+    document.getElementById('btnText').textContent = available.length === 0 ? 'All Done!' : '✦ Pick a Topic';
+  } catch(e) {
+    setSyncStatus('err', 'Connection error — check credentials');
+    document.getElementById('btnText').textContent = 'Cannot connect';
+  }
+}
+
+async function saveToSheet() {
+  setSyncStatus('loading', 'Saving…');
+  try {
+    await sheetWrite(available, discussed);
+    setSyncStatus('ok', 'Saved');
+  } catch(e) {
+    setSyncStatus('err', 'Save failed');
+    showToast('Could not save — check connection');
+  }
+}
+
+async function extractTopic() {
+  if (available.length === 0) { showToast('No topics left!'); return; }
   const btn = document.getElementById('btnExtract');
   const display = document.getElementById('topicDisplay');
-  btn.classList.add('spinning');
   btn.disabled = true;
-  display.classList.add('animating');
+  btn.classList.add('spinning');
 
-  setTimeout(() => {
+  try {
+    const fresh = await sheetRead();
+    available = fresh.available;
+    discussed = fresh.discussed;
+  } catch(e) {}
+
+  if (available.length === 0) {
+    btn.classList.remove('spinning');
+    showToast('No topics left!');
+    return;
+  }
+
+  setTimeout(async () => {
     const idx = Math.floor(Math.random() * available.length);
     const topic = available.splice(idx, 1)[0];
     discussed.unshift(topic);
-    save('topics_available', available);
-    save('topics_discussed', discussed);
 
-    display.classList.remove('empty', 'animating');
+    display.className = 'topic-text';
     display.style.fontStyle = 'italic';
+    display.style.opacity = '0';
+    display.style.transform = 'translateY(8px)';
     display.textContent = topic;
+
+    setTimeout(() => {
+      display.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      display.style.opacity = '1';
+      display.style.transform = 'none';
+    }, 50);
 
     const badge = document.getElementById('remainingBadge');
     badge.style.display = 'block';
     badge.textContent = available.length === 0 ? 'All topics discussed!' : `${available.length} topic${available.length !== 1 ? 's' : ''} remaining`;
 
-    updateCounts();
-    renderAvailable();
-    renderDiscussed();
+    renderAll();
     btn.classList.remove('spinning');
     btn.disabled = available.length === 0;
-    if (available.length === 0) document.getElementById('btnText').textContent = 'All Done!';
+    document.getElementById('btnText').textContent = available.length === 0 ? 'All Done!' : '✦ Pick a Topic';
 
-    // Animate in
-    display.style.opacity = '0';
-    display.style.transform = 'translateY(8px)';
-    setTimeout(() => {
-      display.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-      display.style.opacity = '1';
-      display.style.transform = 'translateY(0)';
-    }, 50);
-  }, 600);
+    await saveToSheet();
+  }, 700);
 }
 
-// ── Render lists ──
+async function addTopic(inputId) {
+  const inp = document.getElementById(inputId);
+  const val = inp.value.trim();
+  if (!val) return;
+  inp.value = '';
+  available.push(val);
+  renderAll();
+  document.getElementById('btnExtract').disabled = false;
+  document.getElementById('btnText').textContent = '✦ Pick a Topic';
+  showToast('Topic added!');
+  await saveToSheet();
+}
+
+async function deleteTopic(i) {
+  available.splice(i, 1);
+  renderAll();
+  showToast('Topic removed');
+  await saveToSheet();
+}
+
+async function restoreTopic(i) {
+  const t = discussed.splice(i, 1)[0];
+  available.push(t);
+  renderAll();
+  document.getElementById('btnExtract').disabled = false;
+  document.getElementById('btnText').textContent = '✦ Pick a Topic';
+  showToast('Topic restored!');
+  await saveToSheet();
+}
+
+function renderAll() { renderAvailable(); renderDiscussed(); updateCounts(); }
+
 function renderAvailable() {
   const ul = document.getElementById('availableList');
   ul.innerHTML = '';
-  if (available.length === 0) {
-    ul.innerHTML = '<li class="empty-list">No topics yet — add some above!</li>';
-    return;
-  }
+  if (!available.length) { ul.innerHTML = '<li class="empty-list">No topics yet — add some above!</li>'; return; }
   available.forEach((t, i) => {
     const li = document.createElement('li');
     li.className = 'topic-item';
-    li.innerHTML = `
-      <div class="topic-dot"></div>
-      <span class="topic-item-text">${esc(t)}</span>
-      <button class="btn-del" onclick="deleteTopic(${i})" aria-label="Remove topic">
+    li.innerHTML = `<div class="topic-dot"></div><span class="topic-item-text">${esc(t)}</span>
+      <button class="btn-del" onclick="deleteTopic(${i})">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
       </button>`;
     ul.appendChild(li);
@@ -548,17 +546,12 @@ function renderAvailable() {
 function renderDiscussed() {
   const ul = document.getElementById('discussedList');
   ul.innerHTML = '';
-  if (discussed.length === 0) {
-    ul.innerHTML = '<li class="empty-list">No topics discussed yet.</li>';
-    return;
-  }
+  if (!discussed.length) { ul.innerHTML = '<li class="empty-list">No topics discussed yet.</li>'; return; }
   discussed.forEach((t, i) => {
     const li = document.createElement('li');
     li.className = 'topic-item';
-    li.innerHTML = `
-      <div class="topic-dot done"></div>
-      <span class="topic-item-text done">${esc(t)}</span>
-      <button class="btn-del" onclick="restoreTopic(${i})" aria-label="Move back to available" title="Restore to available">
+    li.innerHTML = `<div class="topic-dot done"></div><span class="topic-item-text done">${esc(t)}</span>
+      <button class="btn-del" onclick="restoreTopic(${i})" title="Restore to available">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
       </button>`;
     ul.appendChild(li);
@@ -570,47 +563,10 @@ function updateCounts() {
   document.getElementById('discussedCount').textContent = discussed.length;
 }
 
-function deleteTopic(i) {
-  available.splice(i, 1);
-  save('topics_available', available);
-  renderAvailable();
-  updateCounts();
-  showToast('Topic removed');
-}
-
-function restoreTopic(i) {
-  const t = discussed.splice(i, 1)[0];
-  available.push(t);
-  save('topics_available', available);
-  save('topics_discussed', discussed);
-  renderAvailable();
-  renderDiscussed();
-  updateCounts();
-  const btn = document.getElementById('btnExtract');
-  btn.disabled = false;
-  document.getElementById('btnText').textContent = '✦ Pick a Topic';
-  showToast('Topic restored!');
-}
-
-function addTopicFromInput(inputId) {
-  const inp = document.getElementById(inputId);
-  const val = inp.value.trim();
-  if (!val) return;
-  available.push(val);
-  save('topics_available', available);
-  renderAvailable();
-  updateCounts();
-  inp.value = '';
-  document.getElementById('btnExtract').disabled = false;
-  document.getElementById('btnText').textContent = '✦ Pick a Topic';
-  showToast('Topic added!');
-}
-
-// ── Sheets ──
 let currentSheet = null;
 function openSheet(name) {
   if (currentSheet) closeSheet();
-  const ids = {available:'sheetAvailable', discussed:'sheetDiscussed', add:'sheetAdd', settings:'sheetSettings'};
+  const ids = {available:'sheetAvailable',discussed:'sheetDiscussed',add:'sheetAdd',settings:'sheetSettings'};
   const el = document.getElementById(ids[name]);
   document.getElementById('overlay').classList.add('open');
   el.classList.add('open');
@@ -618,71 +574,62 @@ function openSheet(name) {
   if (name === 'available') { renderAvailable(); setTimeout(() => document.getElementById('addInputTop').focus(), 400); }
   if (name === 'discussed') renderDiscussed();
   if (name === 'add') setTimeout(() => document.getElementById('addInputMain').focus(), 400);
+  if (name === 'settings') populateSettingsForm();
 }
 function closeSheet() {
   if (currentSheet) { currentSheet.classList.remove('open'); currentSheet = null; }
   document.getElementById('overlay').classList.remove('open');
 }
 
-// ── Settings ──
 function populateSettingsForm() {
   document.getElementById('settingTitle').value = settings.title;
   document.getElementById('settingSubtitle').value = settings.subtitle;
   document.getElementById('colorAccent').value = settings.accent;
   document.getElementById('colorBg').value = settings.bg;
-
   const grid = document.getElementById('emojiGrid');
   grid.innerHTML = '';
   EMOJIS.forEach(e => {
     const btn = document.createElement('button');
     btn.className = 'emoji-btn' + (e === settings.icon ? ' selected' : '');
     btn.textContent = e;
-    btn.onclick = () => {
-      grid.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      settings.icon = e;
-    };
+    btn.onclick = () => { grid.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); settings.icon = e; };
     grid.appendChild(btn);
   });
 }
 
 function saveSettings() {
-  settings.title    = document.getElementById('settingTitle').value.trim() || 'Conversazioni';
+  settings.title    = document.getElementById('settingTitle').value.trim() || 'Palombari';
   settings.subtitle = document.getElementById('settingSubtitle').value.trim() || 'pick a topic, start a story';
   settings.accent   = document.getElementById('colorAccent').value;
   settings.bg       = document.getElementById('colorBg').value;
-  save('app_settings', settings);
-  applySettings(true);
+  localStorage.setItem('app_settings', JSON.stringify(settings));
+  applySettings();
   closeSheet();
+  showToast('Style saved!');
 }
 
-function applySettings(animate) {
+function applySettings() {
   document.getElementById('appTitle').textContent    = settings.title;
   document.getElementById('appSubtitle').textContent = settings.subtitle;
   document.getElementById('appIcon').textContent     = settings.icon;
   document.documentElement.style.setProperty('--accent', settings.accent);
   document.documentElement.style.setProperty('--bg', settings.bg);
-  // Derive bg2/bg3 from bg (darken slightly)
   document.title = settings.title;
-  if (animate) showToast('Style saved!');
 }
 
-// ── Helpers ──
 function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
 }
-
 function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-// ── Keyboard ──
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 
-init();
+setInterval(loadFromSheet, 30000);
+applySettings();
+populateSettingsForm();
+loadFromSheet();
 </script>
 </body>
 </html>
