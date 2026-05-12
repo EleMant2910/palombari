@@ -1,6 +1,6 @@
 {
-  "name": "Conversazioni",
-  "short_name": "Conversazioni",
+  "name": "Palombari",
+  "short_name": "Palombari",
   "description": "Pick a random conversation topic",
   "start_url": "./index.html",
   "display": "standalone",
