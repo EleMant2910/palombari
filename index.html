@@ -7,31 +7,33 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Palombari">
-<meta name="theme-color" content="#1a1a2e">
+<meta name="theme-color" content="#001e3c">
 <title>Palombari</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #1a1a2e;
-    --bg2: #16213e;
-    --bg3: #0f3460;
-    --accent: #e94560;
-    --accent2: #f5a623;
-    --text: #f0ece2;
-    --text2: #a8a4a0;
-    --card: rgba(255,255,255,0.06);
-    --card-border: rgba(255,255,255,0.12);
-    --radius: 20px;
-    --radius-sm: 12px;
+    --bg-top:      #003050;
+    --bg-bottom:   #000c1a;
+    --accent:      #c88c3c;
+    --accent2:     #c8a050;
+    --steel:       #8ca0b4;
+    --teal:        #508ca0;
+    --text:        #f0ece2;
+    --text2:       #8ca0b4;
+    --card:        rgba(0,50,80,0.55);
+    --card-border: rgba(200,140,60,0.25);
+    --radius:      24px;
+    --radius-sm:   14px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
   body {
     font-family: 'Lato', sans-serif;
-    background: var(--bg);
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    background-attachment: fixed;
     color: var(--text);
     min-height: 100vh;
     min-height: -webkit-fill-available;
@@ -39,282 +41,458 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  .bg-orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(80px); opacity: 0.25; }
-  .orb1 { width: 300px; height: 300px; background: var(--accent); top: -80px; right: -80px; }
-  .orb2 { width: 250px; height: 250px; background: var(--bg3); bottom: 100px; left: -60px; }
-  .orb3 { width: 180px; height: 180px; background: var(--accent2); top: 40%; right: -40px; opacity: 0.15; }
+  /* ── Bubbles (7) ── */
+  .bubbles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .bubble {
+    position: absolute; bottom: -20px; border-radius: 50%;
+    background: rgba(140,160,180,0.07); border: 1px solid rgba(140,160,180,0.13);
+    animation: rise linear infinite;
+  }
+  /* Centre spread */
+  .bubble:nth-child(1)  { width:9px;  height:9px;  left:7%;  animation-duration:13s; animation-delay:0s; }
+  .bubble:nth-child(2)  { width:5px;  height:5px;  left:18%; animation-duration:19s; animation-delay:3s; }
+  .bubble:nth-child(3)  { width:11px; height:11px; left:28%; animation-duration:15s; animation-delay:6s; }
+  .bubble:nth-child(4)  { width:4px;  height:4px;  left:38%; animation-duration:21s; animation-delay:1s; }
+  .bubble:nth-child(5)  { width:8px;  height:8px;  left:47%; animation-duration:17s; animation-delay:8s; }
+  .bubble:nth-child(6)  { width:6px;  height:6px;  left:55%; animation-duration:23s; animation-delay:4s; }
+  .bubble:nth-child(7)  { width:7px;  height:7px;  left:63%; animation-duration:16s; animation-delay:11s; }
+  .bubble:nth-child(8)  { width:5px;  height:5px;  left:71%; animation-duration:20s; animation-delay:2s; }
+  .bubble:nth-child(9)  { width:10px; height:10px; left:79%; animation-duration:14s; animation-delay:7s; }
+  .bubble:nth-child(10) { width:4px;  height:4px;  left:86%; animation-duration:22s; animation-delay:5s; }
+  .bubble:nth-child(11) { width:8px;  height:8px;  left:93%; animation-duration:18s; animation-delay:9s; }
+  .bubble:nth-child(12) { width:6px;  height:6px;  left:13%; animation-duration:25s; animation-delay:12s; }
+  .bubble:nth-child(13) { width:9px;  height:9px;  left:33%; animation-duration:12s; animation-delay:15s; }
+  .bubble:nth-child(14) { width:5px;  height:5px;  left:58%; animation-duration:24s; animation-delay:0s; }
+  .bubble:nth-child(15) { width:7px;  height:7px;  left:76%; animation-duration:11s; animation-delay:13s; }
+  /* Left side extras */
+  .bubble:nth-child(16) { width:5px;  height:5px;  left:2%;  animation-duration:16s; animation-delay:2s; }
+  .bubble:nth-child(17) { width:8px;  height:8px;  left:5%;  animation-duration:21s; animation-delay:9s; }
+  .bubble:nth-child(18) { width:4px;  height:4px;  left:10%; animation-duration:14s; animation-delay:17s; }
+  .bubble:nth-child(19) { width:6px;  height:6px;  left:3%;  animation-duration:19s; animation-delay:5s; }
+  .bubble:nth-child(20) { width:9px;  height:9px;  left:8%;  animation-duration:23s; animation-delay:20s; }
+  /* Right side extras */
+  .bubble:nth-child(21) { width:5px;  height:5px;  left:91%; animation-duration:15s; animation-delay:4s; }
+  .bubble:nth-child(22) { width:7px;  height:7px;  left:95%; animation-duration:20s; animation-delay:11s; }
+  .bubble:nth-child(23) { width:4px;  height:4px;  left:88%; animation-duration:17s; animation-delay:7s; }
+  .bubble:nth-child(24) { width:9px;  height:9px;  left:97%; animation-duration:13s; animation-delay:16s; }
+  .bubble:nth-child(25) { width:6px;  height:6px;  left:92%; animation-duration:22s; animation-delay:22s; }
+  @keyframes rise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(-100vh) translateX(15px); opacity: 0; }
+  }
 
-  .app { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 0 20px; }
+  /* ── Layout ── */
+  .app {
+    position: relative; z-index: 1;
+    max-width: 480px; margin: 0 auto; padding: 0 20px;
+    display: flex; flex-direction: column;
+    min-height: 100vh; min-height: -webkit-fill-available;
+  }
 
-  header { padding: 60px 0 24px; text-align: center; }
-  .app-icon-wrap { margin-bottom: 14px; }
+  /* ── Header ── */
+  header { padding: 48px 0 22px; text-align: center; }
   .app-icon {
-    width: 72px; height: 72px; border-radius: 18px;
-    background: linear-gradient(135deg, var(--accent), #9b2c47);
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 36px; box-shadow: 0 8px 32px rgba(233,69,96,0.35);
+    width: 80px; height: 80px; border-radius: 20px;
+    overflow: hidden; display: inline-block; margin-bottom: 14px;
+    box-shadow: 0 8px 36px rgba(200,140,60,0.28), 0 0 0 2px rgba(200,140,60,0.18);
   }
-  h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; letter-spacing: 0.5px; color: var(--text); }
-  .subtitle { font-size: 14px; color: var(--text2); margin-top: 4px; font-weight: 300; letter-spacing: 1px; }
+  .app-icon img { width: 100%; height: 100%; object-fit: cover; }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 28px; font-weight: 600; letter-spacing: 4px;
+    color: var(--text);
+    text-shadow: 0 2px 20px rgba(200,140,60,0.25);
+  }
 
-  .sync-bar { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--text2); margin-bottom: 16px; height: 20px; }
-  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text2); transition: background 0.3s; }
-  .sync-dot.ok { background: #4caf50; }
-  .sync-dot.err { background: var(--accent); }
-  .sync-dot.loading { background: var(--accent2); animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  /* ── Hero card ── */
+  .hero-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(22px);
+    box-shadow:
+      0 8px 48px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(200,160,80,0.12),
+      inset 0 -1px 0 rgba(0,0,0,0.2);
+    padding: 28px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    margin-bottom: 14px;
+  }
 
-  .main-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 32px 24px; margin-bottom: 16px; backdrop-filter: blur(16px); }
+  .dive-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent2); opacity: 0.85;
+    margin-bottom: 20px;
+  }
 
-  .topic-display { min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; }
-  .topic-label { font-size: 11px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; font-weight: 700; }
-  .topic-text { font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1.3; color: var(--text); font-style: italic; transition: opacity 0.4s ease, transform 0.4s ease; }
-  .topic-text.empty { font-size: 15px; color: var(--text2); font-style: normal; font-family: 'Lato', sans-serif; font-weight: 300; }
+  .topic-area {
+    flex: 1; width: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    min-height: 160px;
+    padding: 16px 8px;
+    border-radius: 16px;
+    background: rgba(0,30,50,0.35);
+    border: 1px solid rgba(140,160,180,0.08);
+    margin-bottom: 20px;
+    position: relative;
+  }
 
-  .remaining-badge { font-size: 12px; color: var(--text2); background: rgba(255,255,255,0.06); border-radius: 20px; padding: 4px 14px; margin-top: 4px; }
+  .topic-placeholder {
+    font-size: 13px; color: rgba(140,160,180,0.35);
+    font-weight: 300; letter-spacing: 2px;
+  }
 
+  .topic-text {
+    font-family: 'Cinzel', serif;
+    font-size: 22px; line-height: 1.5; color: var(--text);
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: none;
+    padding: 0 8px;
+  }
+  .topic-text.visible { display: block; opacity: 1; transform: none; }
+
+  .remaining-badge {
+    position: absolute; bottom: 12px;
+    font-size: 10px; color: rgba(140,160,180,0.5);
+    background: rgba(0,40,60,0.6);
+    border-radius: 20px; padding: 3px 12px; letter-spacing: 0.5px;
+  }
+
+  /* ── E andiamo — outlined gold button ── */
   .btn-extract {
-    width: 100%; padding: 18px; background: var(--accent); border: none; border-radius: var(--radius-sm);
-    color: white; font-family: 'Lato', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-    cursor: pointer; margin-top: 24px; box-shadow: 0 4px 24px rgba(233,69,96,0.4); transition: transform 0.15s ease, box-shadow 0.15s ease;
+    width: 100%; padding: 20px;
+    background: transparent;
+    border: 2px solid var(--accent2);
+    border-radius: var(--radius-sm);
+    color: var(--accent2);
+    font-family: 'Cinzel', serif;
+    font-size: 19px; font-weight: 600; letter-spacing: 3px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(200,160,80,0.12), inset 0 0 20px rgba(200,160,80,0.04);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
-  .btn-extract:active { transform: scale(0.97); }
-  .btn-extract:disabled { background: #444; box-shadow: none; cursor: default; color: #888; }
+  .btn-extract:active {
+    transform: scale(0.97);
+    background: rgba(200,160,80,0.08);
+    box-shadow: 0 0 30px rgba(200,160,80,0.2);
+  }
+  .btn-extract:disabled {
+    border-color: rgba(100,130,150,0.25);
+    color: rgba(100,130,150,0.35);
+    box-shadow: none; cursor: default;
+  }
   .btn-extract .btn-inner { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .spin { display: none; animation: spin 0.6s linear infinite; }
   .btn-extract.spinning .spin { display: inline-block; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-  .tile { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 16px; cursor: pointer; transition: background 0.2s; backdrop-filter: blur(8px); }
-  .tile:active { background: rgba(255,255,255,0.1); }
-  .tile-icon { font-size: 22px; margin-bottom: 6px; }
-  .tile-count { font-size: 22px; font-weight: 700; font-family: 'Playfair Display', serif; color: var(--text); }
-  .tile-name { font-size: 11px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
-  .tile.accent-tile { border-color: rgba(233,69,96,0.4); }
-  .tile-count.accent { color: var(--accent); }
+  /* ── Secondary row ── */
+  .secondary-row { margin-bottom: 12px; }
+  .btn-add-main {
+    width: 100%; padding: 14px 10px;
+    background: rgba(0,50,70,0.5);
+    border: 1px solid rgba(200,140,60,0.22);
+    border-radius: var(--radius-sm);
+    color: var(--accent2); font-family: 'Cinzel', serif;
+    font-size: 12px; font-weight: 400; letter-spacing: 1.5px;
+    cursor: pointer; backdrop-filter: blur(12px);
+    transition: background 0.2s, border-color 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-add-main:active { background: rgba(0,70,90,0.6); border-color: rgba(200,140,60,0.45); }
 
-  .btn-add { width: 100%; padding: 15px; background: transparent; border: 1px solid var(--card-border); border-radius: var(--radius-sm); color: var(--text); font-family: 'Lato', sans-serif; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; backdrop-filter: blur(8px); margin-bottom: 16px; }
-  .btn-add:active { background: rgba(255,255,255,0.06); }
+  /* ── Small tiles ── */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .tile {
+    background: rgba(0,30,50,0.35); border: 1px solid rgba(140,160,180,0.1);
+    border-radius: var(--radius-sm); padding: 12px 14px;
+    cursor: pointer; transition: background 0.2s; backdrop-filter: blur(10px);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tile:active { background: rgba(0,50,70,0.5); }
+  .tile-emoji { font-size: 20px; flex-shrink: 0; }
+  .tile-info {}
+  .tile-count { font-size: 16px; font-weight: 700; font-family: 'Cinzel', serif; color: rgba(140,160,180,0.6); }
+  .tile-count.accent { color: rgba(200,160,80,0.65); }
+  .tile-name { font-size: 9px; color: rgba(140,160,180,0.45); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
 
-  .overlay { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+  /* ── Sync bar ── */
+  .sync-bar {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: 10px; color: rgba(140,160,180,0.3);
+    letter-spacing: 0.5px; padding: 8px 0 4px;
+  }
+  .sync-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(140,160,180,0.25); transition: background 0.3s; }
+  .sync-dot.ok      { background: rgba(92,184,92,0.45); }
+  .sync-dot.err     { background: rgba(192,57,43,0.65); }
+  .sync-dot.loading { background: rgba(200,140,60,0.5); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(0,8,18,0.94); backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(200,140,60,0.12);
+    display: flex; justify-content: space-around; padding: 10px 0;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+  .nav-btn {
+    background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    color: rgba(140,160,180,0.45); font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 6px 16px;
+    font-family: 'Lato', sans-serif; transition: color 0.15s;
+  }
+  .nav-btn.active { color: var(--accent2); }
+
+  .page-padding { padding-bottom: 110px; }
+
+  /* ── Overlay & Sheets ── */
+  .overlay { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(0,8,18,0.8); backdrop-filter: blur(6px); }
   .overlay.open { display: block; }
 
-  .sheet { position: fixed; bottom: 0; left: 0; right: 0; z-index: 101; background: #1e1e38; border-radius: 28px 28px 0 0; padding: 0 20px calc(env(safe-area-inset-bottom) + 28px); transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); max-height: 85vh; overflow-y: auto; border-top: 1px solid var(--card-border); }
+  .sheet {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 101;
+    background: #001828; border-radius: 28px 28px 0 0;
+    padding: 0 20px calc(env(safe-area-inset-bottom) + 28px);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    max-height: 85vh; overflow-y: auto;
+    border-top: 1px solid rgba(200,140,60,0.22);
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
+  }
   .sheet.open { transform: translateY(0); }
-  .sheet-handle { width: 40px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 12px auto 20px; }
-  .sheet-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 20px; color: var(--text); }
+  .sheet-handle { width: 40px; height: 4px; background: rgba(140,160,180,0.2); border-radius: 2px; margin: 12px auto 20px; }
+  .sheet-title { font-family: 'Cinzel', serif; font-size: 18px; margin-bottom: 20px; color: var(--text); letter-spacing: 1px; }
 
   .topic-list { list-style: none; }
-  .topic-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); animation: fadeIn 0.25s ease; }
+  .topic-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(140,160,180,0.07); animation: fadeIn 0.25s ease; }
   .topic-item:last-child { border-bottom: none; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-  .topic-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--accent); }
-  .topic-dot.done { background: var(--text2); }
-  .topic-item-text { flex: 1; font-size: 15px; color: var(--text); font-weight: 300; }
-  .topic-item-text.done { color: var(--text2); text-decoration: line-through; }
-  .btn-del { background: none; border: none; cursor: pointer; color: var(--text2); padding: 4px; border-radius: 6px; opacity: 0.5; display: flex; }
+  .topic-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: var(--accent); }
+  .topic-dot.done { background: var(--teal); opacity: 0.45; }
+  .topic-item-text { flex: 1; font-size: 14px; color: var(--text); font-weight: 300; line-height: 1.4; }
+  .topic-item-text.done { color: var(--steel); text-decoration: line-through; opacity: 0.6; }
+  .btn-del { background: none; border: none; cursor: pointer; color: var(--steel); padding: 4px; opacity: 0.35; display: flex; }
   .btn-del:active { color: var(--accent); opacity: 1; }
-  .empty-list { text-align: center; padding: 32px 0; color: var(--text2); font-size: 14px; font-weight: 300; }
+  .empty-list { text-align: center; padding: 32px 0; color: var(--steel); font-size: 13px; font-weight: 300; opacity: 0.6; }
 
   .add-form { display: flex; gap: 10px; margin-bottom: 20px; }
-  .add-input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text); font-family: 'Lato', sans-serif; font-size: 15px; outline: none; }
-  .add-input::placeholder { color: var(--text2); }
-  .add-input:focus { border-color: var(--accent); }
-  .btn-confirm { background: var(--accent); border: none; border-radius: var(--radius-sm); padding: 12px 18px; color: white; font-size: 15px; cursor: pointer; font-weight: 700; }
+  .add-input { flex: 1; background: rgba(0,50,70,0.45); border: 1px solid rgba(140,160,180,0.18); border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text); font-family: 'Lato', sans-serif; font-size: 14px; outline: none; }
+  .add-input::placeholder { color: rgba(140,160,180,0.5); }
+  .add-input:focus { border-color: rgba(200,140,60,0.45); }
+  .btn-confirm { background: var(--accent); border: none; border-radius: var(--radius-sm); padding: 12px 18px; color: #001020; font-size: 18px; cursor: pointer; font-weight: 700; }
   .btn-confirm:active { transform: scale(0.95); }
 
-  .settings-grid { display: grid; gap: 14px; }
+  .settings-grid { display: grid; gap: 16px; }
   .setting-row { display: flex; flex-direction: column; gap: 8px; }
-  .setting-label { font-size: 12px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; }
+  .setting-label { font-size: 10px; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; }
   .color-picker-wrap { display: flex; align-items: center; gap: 12px; }
   input[type=color] { width: 44px; height: 44px; border: none; border-radius: 10px; cursor: pointer; background: none; padding: 2px; }
-  .color-name { font-size: 14px; color: var(--text); }
-  .setting-input { background: rgba(255,255,255,0.08); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 10px 14px; color: var(--text); font-size: 15px; outline: none; font-family: 'Lato', sans-serif; }
-  .setting-input:focus { border-color: var(--accent); }
-  .emoji-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; }
-  .emoji-btn { background: rgba(255,255,255,0.06); border: 1px solid transparent; border-radius: 10px; padding: 8px; font-size: 22px; cursor: pointer; text-align: center; }
-  .emoji-btn.selected { border-color: var(--accent); background: rgba(233,69,96,0.15); }
-  .emoji-btn:active { transform: scale(0.92); }
-  .btn-save-settings { width: 100%; margin-top: 20px; padding: 14px; background: var(--accent); border: none; border-radius: var(--radius-sm); color: white; font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+  .color-name { font-size: 13px; color: var(--steel); }
+  .setting-input { background: rgba(0,50,70,0.4); border: 1px solid rgba(140,160,180,0.18); border-radius: var(--radius-sm); padding: 10px 14px; color: var(--text); font-size: 14px; outline: none; font-family: 'Lato', sans-serif; }
+  .setting-input:focus { border-color: rgba(200,140,60,0.45); }
+  .btn-save-settings { width: 100%; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, var(--accent), #a0703a); border: none; border-radius: var(--radius-sm); color: #001020; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Cinzel', serif; }
 
-  nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(15,15,30,0.9); backdrop-filter: blur(20px); border-top: 1px solid var(--card-border); display: flex; justify-content: space-around; padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
-  .nav-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text2); font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; padding: 6px 20px; border-radius: 10px; font-family: 'Lato', sans-serif; }
-  .nav-btn.active { color: var(--accent); }
-
-  .page-padding { padding-bottom: 100px; }
-
-  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(30,30,56,0.95); border: 1px solid var(--card-border); border-radius: 30px; padding: 10px 22px; font-size: 14px; color: var(--text); opacity: 0; transition: all 0.3s ease; pointer-events: none; white-space: nowrap; backdrop-filter: blur(10px); z-index: 200; }
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(0,24,40,0.96); border: 1px solid rgba(200,140,60,0.28); border-radius: 30px; padding: 10px 22px; font-size: 13px; color: var(--text); opacity: 0; transition: all 0.3s ease; pointer-events: none; white-space: nowrap; backdrop-filter: blur(10px); z-index: 200; letter-spacing: 0.5px; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
 <script>
-  // !! PASTE YOUR APPS SCRIPT URL BELOW — do not share this file after editing !!
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3dy1tCWLhjIQDGj9YJ-SxY0OAB0a4KRPIP818zq94bdx5kPAcLDvsGM0h97kM4A3_/exec';
+  // !! PASTE YOUR APPS SCRIPT URL BELOW !!
+  const SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
 </script>
 
-<div class="bg-orb orb1"></div>
-<div class="bg-orb orb2"></div>
-<div class="bg-orb orb3"></div>
+<div class="bubbles">
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
 
 <div class="app page-padding">
+
   <header>
-    <div class="app-icon-wrap">
-      <div class="app-icon" id="appIcon">💬</div>
+    <div class="app-icon">
+      <img src="icon-192.png" alt="Palombari">
     </div>
     <h1 id="appTitle">Palombari</h1>
-    <p class="subtitle" id="appSubtitle">pick a topic, start a story</p>
   </header>
 
-  <div class="sync-bar">
-    <div class="sync-dot loading" id="syncDot"></div>
-    <span id="syncText">Connecting…</span>
-  </div>
+  <!-- Hero card -->
+  <div class="hero-card">
+    <div class="dive-label">Il tuffo di oggi</div>
 
-  <div class="main-card">
-    <div class="topic-display">
-      <span class="topic-label">current topic</span>
-      <div class="topic-text empty" id="topicDisplay">Tap the button to pick a topic</div>
+    <div class="topic-area" id="topicArea">
+      <div class="topic-placeholder" id="topicPlaceholder">— — —</div>
+      <div class="topic-text" id="topicDisplay"></div>
       <div class="remaining-badge" id="remainingBadge" style="display:none"></div>
     </div>
+
     <button class="btn-extract" id="btnExtract" onclick="extractTopic()" disabled>
       <div class="btn-inner">
-        <svg class="spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg>
-        <span id="btnText">Loading…</span>
+        <svg class="spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg>
+        <span id="btnText">Caricamento…</span>
       </div>
     </button>
   </div>
 
+  <!-- Aggiungiamo -->
+  <div class="secondary-row">
+    <button class="btn-add-main" onclick="openSheet('add')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Aggiungiamo alla lista
+    </button>
+  </div>
+
+  <!-- Small tiles with emojis -->
   <div class="tiles">
-    <div class="tile accent-tile" onclick="openSheet('available')">
-      <div class="tile-icon">📋</div>
-      <div class="tile-count accent" id="availableCount">–</div>
-      <div class="tile-name">Available</div>
+    <div class="tile" onclick="openSheet('available')">
+      <div class="tile-emoji">🌊</div>
+      <div class="tile-info">
+        <div class="tile-count accent" id="availableCount">–</div>
+        <div class="tile-name">Lista completa</div>
+      </div>
     </div>
     <div class="tile" onclick="openSheet('discussed')">
-      <div class="tile-icon">✅</div>
-      <div class="tile-count" id="discussedCount">–</div>
-      <div class="tile-name">Discussed</div>
+      <div class="tile-emoji">🐚</div>
+      <div class="tile-info">
+        <div class="tile-count" id="discussedCount">–</div>
+        <div class="tile-name">Discorsi passati</div>
+      </div>
     </div>
   </div>
 
-  <button class="btn-add" onclick="openSheet('add')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    Add a new topic
-  </button>
+  <!-- Sync bar -->
+  <div class="sync-bar">
+    <div class="sync-dot loading" id="syncDot"></div>
+    <span id="syncText">Connessione…</span>
+  </div>
+
 </div>
 
+<!-- Nav -->
 <nav>
   <button class="nav-btn active" onclick="scrollToTop()">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
     Home
   </button>
   <button class="nav-btn" onclick="openSheet('available')">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg>
-    Topics
+    🌊
+    <span>Lista</span>
   </button>
   <button class="nav-btn" onclick="openSheet('discussed')">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-    History
+    🐚
+    <span>Passati</span>
   </button>
   <button class="nav-btn" onclick="openSheet('settings')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    Style
+    Stile
   </button>
 </nav>
 
 <div class="overlay" id="overlay" onclick="closeSheet()"></div>
 
+<!-- Sheet: Lista completa -->
 <div class="sheet" id="sheetAvailable">
   <div class="sheet-handle"></div>
-  <div class="sheet-title">Available Topics</div>
+  <div class="sheet-title">🌊 Lista completa</div>
   <div class="add-form">
-    <input class="add-input" id="addInputTop" placeholder="New topic…" maxlength="80" onkeydown="if(event.key==='Enter')addTopic('addInputTop')">
+    <input class="add-input" id="addInputTop" placeholder="Nuovo argomento…" maxlength="80" onkeydown="if(event.key==='Enter')addTopic('addInputTop')">
     <button class="btn-confirm" onclick="addTopic('addInputTop')">+</button>
   </div>
   <ul class="topic-list" id="availableList"></ul>
 </div>
 
+<!-- Sheet: Discorsi passati -->
 <div class="sheet" id="sheetDiscussed">
   <div class="sheet-handle"></div>
-  <div class="sheet-title">Discussed Topics</div>
+  <div class="sheet-title">🐚 Discorsi passati</div>
   <ul class="topic-list" id="discussedList"></ul>
 </div>
 
+<!-- Sheet: Aggiungi -->
 <div class="sheet" id="sheetAdd">
   <div class="sheet-handle"></div>
-  <div class="sheet-title">Add a Topic</div>
+  <div class="sheet-title">Aggiungiamo alla lista</div>
   <div class="add-form">
-    <input class="add-input" id="addInputMain" placeholder="e.g. Childhood dreams…" maxlength="80" onkeydown="if(event.key==='Enter')addTopic('addInputMain')">
+    <input class="add-input" id="addInputMain" placeholder="es. Sogni d'infanzia…" maxlength="80" onkeydown="if(event.key==='Enter')addTopic('addInputMain')">
     <button class="btn-confirm" onclick="addTopic('addInputMain')">+</button>
   </div>
-  <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-top:8px;font-weight:300;">
-    Topics are shared between both phones in real time via Google Sheets.
+  <p style="font-size:12px;color:var(--steel);line-height:1.7;margin-top:8px;font-weight:300;opacity:0.7;">
+    Gli argomenti sono condivisi tra i due telefoni in tempo reale.
   </p>
 </div>
 
+<!-- Sheet: Stile -->
 <div class="sheet" id="sheetSettings">
   <div class="sheet-handle"></div>
-  <div class="sheet-title">Personalise</div>
+  <div class="sheet-title">Personalizza</div>
   <div class="settings-grid">
     <div class="setting-row">
-      <span class="setting-label">App Name</span>
+      <span class="setting-label">Nome dell'app</span>
       <input class="setting-input" id="settingTitle" placeholder="Palombari" maxlength="30">
     </div>
     <div class="setting-row">
-      <span class="setting-label">Tagline</span>
-      <input class="setting-input" id="settingSubtitle" placeholder="pick a topic, start a story" maxlength="50">
-    </div>
-    <div class="setting-row">
-      <span class="setting-label">App Icon</span>
-      <div class="emoji-grid" id="emojiGrid"></div>
-    </div>
-    <div class="setting-row">
-      <span class="setting-label">Accent Colour</span>
+      <span class="setting-label">Colore principale</span>
       <div class="color-picker-wrap">
-        <input type="color" id="colorAccent" value="#e94560">
-        <span class="color-name">Button &amp; highlights</span>
+        <input type="color" id="colorAccent" value="#c88c3c">
+        <span class="color-name">Bottoni e dettagli</span>
       </div>
     </div>
     <div class="setting-row">
-      <span class="setting-label">Background Colour</span>
+      <span class="setting-label">Colore di sfondo (alto)</span>
       <div class="color-picker-wrap">
-        <input type="color" id="colorBg" value="#1a1a2e">
-        <span class="color-name">App background</span>
+        <input type="color" id="colorBgTop" value="#003050">
+        <span class="color-name">Cima dello schermo</span>
+      </div>
+    </div>
+    <div class="setting-row">
+      <span class="setting-label">Colore di sfondo (basso)</span>
+      <div class="color-picker-wrap">
+        <input type="color" id="colorBgBottom" value="#000c1a">
+        <span class="color-name">Fondo dello schermo</span>
       </div>
     </div>
   </div>
-  <button class="btn-save-settings" onclick="saveSettings()">Save &amp; Apply</button>
+  <button class="btn-save-settings" onclick="saveSettings()">Salva</button>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ── API ──
 async function apiRead() {
   const r = await fetch(SCRIPT_URL);
   if (!r.ok) throw new Error('Read failed');
   return await r.json();
 }
-
-async function apiWrite(available, discussed) {
-  const r = await fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify({ available, discussed })
-  });
+async function apiWrite(av, di) {
+  const r = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ available: av, discussed: di }) });
   if (!r.ok) throw new Error('Write failed');
 }
 
-// ── State ──
 let available = [], discussed = [];
 let settings = JSON.parse(localStorage.getItem('app_settings') || 'null') || {
-  title: 'Palombari', subtitle: 'pick a topic, start a story',
-  icon: '💬', accent: '#e94560', bg: '#1a1a2e'
+  title: 'Palombari', accent: '#c88c3c', bgTop: '#003050', bgBottom: '#000c1a'
 };
-const EMOJIS = ['💬','❤️','🌙','✨','🎲','📖','🌿','🎭','🔮','🌊','🎨','🎵','🌸','🦋','☕','🌟'];
 
 function setSyncStatus(state, text) {
   document.getElementById('syncDot').className = 'sync-dot ' + state;
@@ -322,78 +500,75 @@ function setSyncStatus(state, text) {
 }
 
 async function loadData() {
-  setSyncStatus('loading', 'Syncing…');
+  setSyncStatus('loading', 'Connessione…');
   try {
     const data = await apiRead();
     available = data.available || [];
     discussed = data.discussed || [];
     renderAll();
-    setSyncStatus('ok', 'Synced with Google Sheets');
+    setSyncStatus('ok', 'Sincronizzato');
     const btn = document.getElementById('btnExtract');
     btn.disabled = available.length === 0;
-    document.getElementById('btnText').textContent = available.length === 0 ? 'All Done!' : '✦ Pick a Topic';
+    document.getElementById('btnText').textContent = available.length === 0 ? 'Finiti!' : 'E andiamo!';
   } catch(e) {
-    setSyncStatus('err', 'Connection error — check setup');
-    document.getElementById('btnText').textContent = 'Cannot connect';
+    setSyncStatus('err', 'Errore di connessione');
+    document.getElementById('btnText').textContent = 'E andiamo!';
+    document.getElementById('btnExtract').disabled = false;
   }
 }
 
 async function saveData() {
-  setSyncStatus('loading', 'Saving…');
+  setSyncStatus('loading', 'Salvataggio…');
   try {
     await apiWrite(available, discussed);
-    setSyncStatus('ok', 'Saved');
+    setSyncStatus('ok', 'Salvato');
   } catch(e) {
-    setSyncStatus('err', 'Save failed');
-    showToast('Could not save — check connection');
+    setSyncStatus('err', 'Salvataggio fallito');
+    showToast('Errore nel salvataggio');
   }
 }
 
 async function extractTopic() {
-  if (available.length === 0) { showToast('No topics left!'); return; }
+  if (!available.length) { showToast('Nessun argomento!'); return; }
   const btn = document.getElementById('btnExtract');
-  const display = document.getElementById('topicDisplay');
   btn.disabled = true;
   btn.classList.add('spinning');
 
-  // Refresh first to avoid conflicts
   try {
     const fresh = await apiRead();
     available = fresh.available || [];
     discussed = fresh.discussed || [];
   } catch(e) {}
 
-  if (available.length === 0) {
-    btn.classList.remove('spinning');
-    showToast('No topics left!');
-    return;
-  }
+  if (!available.length) { btn.classList.remove('spinning'); showToast('Nessun argomento!'); return; }
 
   setTimeout(async () => {
     const idx = Math.floor(Math.random() * available.length);
     const topic = available.splice(idx, 1)[0];
     discussed.unshift(topic);
 
-    display.className = 'topic-text';
-    display.style.fontStyle = 'italic';
+    const placeholder = document.getElementById('topicPlaceholder');
+    const display = document.getElementById('topicDisplay');
+    placeholder.style.display = 'none';
+    display.style.display = 'block';
     display.style.opacity = '0';
-    display.style.transform = 'translateY(8px)';
+    display.style.transform = 'translateY(10px)';
     display.textContent = topic;
     setTimeout(() => {
-      display.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
       display.style.opacity = '1';
       display.style.transform = 'none';
-    }, 50);
+    }, 60);
 
     const badge = document.getElementById('remainingBadge');
     badge.style.display = 'block';
-    badge.textContent = available.length === 0 ? 'All topics discussed!' : `${available.length} topic${available.length !== 1 ? 's' : ''} remaining`;
+    badge.textContent = available.length === 0
+      ? 'Tutti esplorati!'
+      : `${available.length} rimanent${available.length !== 1 ? 'i' : 'e'}`;
 
     renderAll();
     btn.classList.remove('spinning');
     btn.disabled = available.length === 0;
-    document.getElementById('btnText').textContent = available.length === 0 ? 'All Done!' : '✦ Pick a Topic';
-
+    document.getElementById('btnText').textContent = available.length === 0 ? 'Finiti!' : 'E andiamo!';
     await saveData();
   }, 700);
 }
@@ -406,15 +581,15 @@ async function addTopic(inputId) {
   available.push(val);
   renderAll();
   document.getElementById('btnExtract').disabled = false;
-  document.getElementById('btnText').textContent = '✦ Pick a Topic';
-  showToast('Topic added!');
+  document.getElementById('btnText').textContent = 'E andiamo!';
+  showToast('Argomento aggiunto!');
   await saveData();
 }
 
 async function deleteTopic(i) {
   available.splice(i, 1);
   renderAll();
-  showToast('Topic removed');
+  showToast('Rimosso');
   await saveData();
 }
 
@@ -423,8 +598,8 @@ async function restoreTopic(i) {
   available.push(t);
   renderAll();
   document.getElementById('btnExtract').disabled = false;
-  document.getElementById('btnText').textContent = '✦ Pick a Topic';
-  showToast('Topic restored!');
+  document.getElementById('btnText').textContent = 'E andiamo!';
+  showToast('Ripristinato!');
   await saveData();
 }
 
@@ -433,13 +608,13 @@ function renderAll() { renderAvailable(); renderDiscussed(); updateCounts(); }
 function renderAvailable() {
   const ul = document.getElementById('availableList');
   ul.innerHTML = '';
-  if (!available.length) { ul.innerHTML = '<li class="empty-list">No topics yet — add some above!</li>'; return; }
+  if (!available.length) { ul.innerHTML = '<li class="empty-list">Nessun argomento — aggiungine uno!</li>'; return; }
   available.forEach((t, i) => {
     const li = document.createElement('li');
     li.className = 'topic-item';
     li.innerHTML = `<div class="topic-dot"></div><span class="topic-item-text">${esc(t)}</span>
       <button class="btn-del" onclick="deleteTopic(${i})">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
       </button>`;
     ul.appendChild(li);
   });
@@ -448,13 +623,13 @@ function renderAvailable() {
 function renderDiscussed() {
   const ul = document.getElementById('discussedList');
   ul.innerHTML = '';
-  if (!discussed.length) { ul.innerHTML = '<li class="empty-list">No topics discussed yet.</li>'; return; }
+  if (!discussed.length) { ul.innerHTML = '<li class="empty-list">Nessun discorso ancora.</li>'; return; }
   discussed.forEach((t, i) => {
     const li = document.createElement('li');
     li.className = 'topic-item';
     li.innerHTML = `<div class="topic-dot done"></div><span class="topic-item-text done">${esc(t)}</span>
-      <button class="btn-del" onclick="restoreTopic(${i})" title="Restore">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+      <button class="btn-del" onclick="restoreTopic(${i})" title="Ripristina">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
       </button>`;
     ul.appendChild(li);
   });
@@ -468,7 +643,7 @@ function updateCounts() {
 let currentSheet = null;
 function openSheet(name) {
   if (currentSheet) closeSheet();
-  const ids = {available:'sheetAvailable',discussed:'sheetDiscussed',add:'sheetAdd',settings:'sheetSettings'};
+  const ids = { available:'sheetAvailable', discussed:'sheetDiscussed', add:'sheetAdd', settings:'sheetSettings' };
   const el = document.getElementById(ids[name]);
   document.getElementById('overlay').classList.add('open');
   el.classList.add('open');
@@ -484,38 +659,26 @@ function closeSheet() {
 }
 
 function populateSettingsForm() {
-  document.getElementById('settingTitle').value = settings.title;
-  document.getElementById('settingSubtitle').value = settings.subtitle;
-  document.getElementById('colorAccent').value = settings.accent;
-  document.getElementById('colorBg').value = settings.bg;
-  const grid = document.getElementById('emojiGrid');
-  grid.innerHTML = '';
-  EMOJIS.forEach(e => {
-    const btn = document.createElement('button');
-    btn.className = 'emoji-btn' + (e === settings.icon ? ' selected' : '');
-    btn.textContent = e;
-    btn.onclick = () => { grid.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); settings.icon = e; };
-    grid.appendChild(btn);
-  });
+  document.getElementById('settingTitle').value  = settings.title;
+  document.getElementById('colorAccent').value   = settings.accent;
+  document.getElementById('colorBgTop').value    = settings.bgTop;
+  document.getElementById('colorBgBottom').value = settings.bgBottom;
 }
-
 function saveSettings() {
   settings.title    = document.getElementById('settingTitle').value.trim() || 'Palombari';
-  settings.subtitle = document.getElementById('settingSubtitle').value.trim() || 'pick a topic, start a story';
   settings.accent   = document.getElementById('colorAccent').value;
-  settings.bg       = document.getElementById('colorBg').value;
+  settings.bgTop    = document.getElementById('colorBgTop').value;
+  settings.bgBottom = document.getElementById('colorBgBottom').value;
   localStorage.setItem('app_settings', JSON.stringify(settings));
   applySettings();
   closeSheet();
-  showToast('Style saved!');
+  showToast('Stile salvato!');
 }
-
 function applySettings() {
-  document.getElementById('appTitle').textContent    = settings.title;
-  document.getElementById('appSubtitle').textContent = settings.subtitle;
-  document.getElementById('appIcon').textContent     = settings.icon;
+  document.getElementById('appTitle').textContent = settings.title;
   document.documentElement.style.setProperty('--accent', settings.accent);
-  document.documentElement.style.setProperty('--bg', settings.bg);
+  document.documentElement.style.setProperty('--bg-top', settings.bgTop);
+  document.documentElement.style.setProperty('--bg-bottom', settings.bgBottom);
   document.title = settings.title;
 }
 
