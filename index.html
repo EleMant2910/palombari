@@ -281,7 +281,7 @@
 
   .topic-item-body { flex: 1; min-width: 0; }
   .topic-item-text { font-size: 14px; color: var(--text); font-weight: 300; line-height: 1.4; cursor: pointer; }
-  .topic-item-text.done { color: var(--steel); text-decoration: line-through; opacity: 0.6; cursor: default; }
+  .topic-item-text.done { color: var(--steel); opacity: 0.6; cursor: default; }
   .topic-item-meta { font-size: 10px; color: rgba(140,160,180,0.4); margin-top: 3px; letter-spacing: 0.3px; }
   .topic-item-pensieri { font-size: 11px; color: rgba(200,160,80,0.55); margin-top: 3px; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -343,8 +343,20 @@
 
 <script>
   // !! PASTE YOUR APPS SCRIPT URL BELOW !!
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7iH2u6uwTYcL7extueFC4k7S7ocq9ge7fptzBGHqLvMHFjwAsN16gBG1qRNMzOYwk/exec';
+  const SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
 </script>
+
+<img src="image_2.png" alt="" aria-hidden="true" style="
+  position: fixed;
+  bottom: 80px;
+  right: -30px;
+  width: 220px;
+  opacity: 0.07;
+  z-index: 0;
+  pointer-events: none;
+  transform: scaleX(-1);
+  filter: saturate(0.5);
+">
 
 <div class="bubbles">
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
@@ -418,11 +430,13 @@
 <!-- Nav -->
 <nav>
   <button class="nav-btn active" onclick="scrollToTop()">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-    Home
+    ⚓
+    <span>Home</span>
   </button>
-  <button class="nav-btn" onclick="openSheet('available')">🌊<span>Lista</span></button>
-  <button class="nav-btn" onclick="openSheet('discussed')">🐚<span>Passati</span></button>
+  <button class="nav-btn" onclick="openNavPensieri()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    Pensieri
+  </button>
   <button class="nav-btn" onclick="openSheet('settings')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     Stile
@@ -460,6 +474,14 @@
   <p style="font-size:12px;color:var(--steel);line-height:1.7;margin-top:8px;font-weight:300;opacity:0.7;">
     Gli argomenti sono condivisi tra i due telefoni in tempo reale.
   </p>
+</div>
+
+<!-- Sheet: Pensieri topic picker -->
+<div class="sheet" id="sheetPensieriPicker">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title">✎ Pensieri</div>
+  <p style="font-size:12px;color:var(--steel);margin-bottom:16px;font-weight:300;opacity:0.7;">Scegli un argomento per aggiungere o modificare i tuoi pensieri.</p>
+  <ul class="topic-list" id="pensieriPickerList"></ul>
 </div>
 
 <!-- Sheet: Pensieri -->
@@ -783,7 +805,9 @@ function renderDiscussed() {
         ${date ? `<div class="topic-item-meta">${date}</div>` : ''}
         ${pensieri ? `<div class="topic-item-pensieri">${esc(pensieri.substring(0,60))}${pensieri.length > 60 ? '…' : ''}</div>` : ''}
       </div>
-      <button class="btn-pensieri-small" onclick="openPensieriSheet(${i})" title="Pensieri">✦</button>
+      <button class="btn-pensieri-small" onclick="openPensieriSheet(${i})" title="Pensieri">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
       <button class="btn-del" onclick="restoreTopic(${i})" title="Ripristina">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
       </button>`;
@@ -823,11 +847,46 @@ function restoreTopicDisplay() {
 }
 setInterval(checkTopicExpiry, 60 * 1000);
 
+// ── Nav Pensieri picker ──
+function openNavPensieri() {
+  const ul = document.getElementById('pensieriPickerList');
+  ul.innerHTML = '';
+  if (!discussed.length) {
+    ul.innerHTML = '<li class="empty-list">Nessun discorso ancora.</li>';
+  } else {
+    discussed.forEach((entry, i) => {
+      const text = entry.text || entry;
+      const pensieri = entry.pensieri || '';
+      const date = entry.date || '';
+      const li = document.createElement('li');
+      li.className = 'topic-item';
+      li.style.cursor = 'pointer';
+      li.innerHTML = `
+        <div class="topic-dot done"></div>
+        <div class="topic-item-body" onclick="pickPensieriTopic(${i})">
+          <div class="topic-item-text" style="opacity:0.8">${esc(text)}</div>
+          ${date ? `<div class="topic-item-meta">${date}</div>` : ''}
+          ${pensieri ? `<div class="topic-item-pensieri">${esc(pensieri.substring(0,50))}${pensieri.length>50?'…':''}</div>` : '<div class="topic-item-meta" style="font-style:italic;color:rgba(140,160,180,0.4)">Nessun pensiero ancora</div>'}
+        </div>
+        <button class="btn-select" onclick="pickPensieriTopic(${i})">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>`;
+      ul.appendChild(li);
+    });
+  }
+  openSheet('pensieriPicker');
+}
+
+function pickPensieriTopic(i) {
+  closeSheet();
+  setTimeout(() => openPensieriSheet(i), 350);
+}
+
 // ── Sheets ──
 let currentSheet = null;
 function openSheet(name) {
   if (currentSheet) { currentSheet.classList.remove('open'); currentSheet = null; }
-  const ids = { available:'sheetAvailable', discussed:'sheetDiscussed', add:'sheetAdd', pensieri:'sheetPensieri', settings:'sheetSettings' };
+  const ids = { available:'sheetAvailable', discussed:'sheetDiscussed', add:'sheetAdd', pensieri:'sheetPensieri', pensieriPicker:'sheetPensieriPicker', settings:'sheetSettings' };
   const el = document.getElementById(ids[name]);
   document.getElementById('overlay').classList.add('open');
   el.classList.add('open');
