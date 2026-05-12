@@ -41,7 +41,7 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* ── Bubbles (7) ── */
+  /* ── Bubbles ── */
   .bubbles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .bubble {
     position: absolute; bottom: -20px; border-radius: 50%;
@@ -112,38 +112,27 @@
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
     backdrop-filter: blur(22px);
-    box-shadow:
-      0 8px 48px rgba(0,0,0,0.4),
-      inset 0 1px 0 rgba(200,160,80,0.12),
-      inset 0 -1px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(200,160,80,0.12), inset 0 -1px 0 rgba(0,0,0,0.2);
     padding: 28px 24px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    flex: 1;
-    margin-bottom: 14px;
+    display: flex; flex-direction: column; align-items: center;
+    flex: 1; margin-bottom: 14px;
   }
 
   .dive-label {
     font-family: 'Cinzel', serif;
     font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent2); opacity: 0.85;
-    margin-bottom: 20px;
+    color: var(--accent2); opacity: 0.85; margin-bottom: 20px;
   }
 
   .topic-area {
     flex: 1; width: 100%;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    text-align: center;
-    min-height: 160px;
-    padding: 16px 8px;
-    border-radius: 16px;
+    text-align: center; min-height: 160px;
+    padding: 16px 8px; border-radius: 16px;
     background: rgba(0,30,50,0.35);
     border: 1px solid rgba(140,160,180,0.08);
-    margin-bottom: 20px;
-    position: relative;
+    margin-bottom: 16px; position: relative;
   }
 
   .topic-placeholder {
@@ -156,41 +145,54 @@
     font-size: 22px; line-height: 1.5; color: var(--text);
     opacity: 0; transform: translateY(10px);
     transition: opacity 0.5s ease, transform 0.5s ease;
-    display: none;
-    padding: 0 8px;
+    display: none; padding: 0 8px;
   }
   .topic-text.visible { display: block; opacity: 1; transform: none; }
 
-  .remaining-badge {
-    position: absolute; bottom: 12px;
-    font-size: 10px; color: rgba(140,160,180,0.5);
-    background: rgba(0,40,60,0.6);
-    border-radius: 20px; padding: 3px 12px; letter-spacing: 0.5px;
+  /* Post-extraction actions inside hero */
+  .hero-actions {
+    display: none; flex-direction: row; gap: 10px;
+    width: 100%; margin-bottom: 16px;
   }
+  .hero-actions.visible { display: flex; }
 
-  /* ── E andiamo — outlined gold button ── */
+  .btn-salta {
+    flex: 1; padding: 11px;
+    background: transparent;
+    border: 1px solid rgba(140,160,180,0.25);
+    border-radius: var(--radius-sm);
+    color: var(--steel); font-family: 'Cinzel', serif;
+    font-size: 12px; letter-spacing: 1.5px;
+    cursor: pointer; transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-salta:active { background: rgba(140,160,180,0.08); border-color: rgba(140,160,180,0.4); }
+
+  .btn-pensieri {
+    flex: 1; padding: 11px;
+    background: transparent;
+    border: 1px solid rgba(200,140,60,0.25);
+    border-radius: var(--radius-sm);
+    color: var(--accent2); font-family: 'Cinzel', serif;
+    font-size: 12px; letter-spacing: 1.5px;
+    cursor: pointer; transition: background 0.2s, border-color 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-pensieri:active { background: rgba(200,140,60,0.08); border-color: rgba(200,140,60,0.5); }
+
+  /* ── E andiamo ── */
   .btn-extract {
     width: 100%; padding: 20px;
     background: transparent;
     border: 2px solid var(--accent2);
     border-radius: var(--radius-sm);
-    color: var(--accent2);
-    font-family: 'Cinzel', serif;
+    color: var(--accent2); font-family: 'Cinzel', serif;
     font-size: 19px; font-weight: 600; letter-spacing: 3px;
     cursor: pointer;
     box-shadow: 0 0 20px rgba(200,160,80,0.12), inset 0 0 20px rgba(200,160,80,0.04);
     transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
-  .btn-extract:active {
-    transform: scale(0.97);
-    background: rgba(200,160,80,0.08);
-    box-shadow: 0 0 30px rgba(200,160,80,0.2);
-  }
-  .btn-extract:disabled {
-    border-color: rgba(100,130,150,0.25);
-    color: rgba(100,130,150,0.35);
-    box-shadow: none; cursor: default;
-  }
+  .btn-extract:active { transform: scale(0.97); background: rgba(200,160,80,0.08); }
+  .btn-extract:disabled { border-color: rgba(100,130,150,0.25); color: rgba(100,130,150,0.35); box-shadow: none; cursor: default; }
   .btn-extract .btn-inner { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .spin { display: none; animation: spin 0.6s linear infinite; }
   .btn-extract.spinning .spin { display: inline-block; }
@@ -200,16 +202,13 @@
   .secondary-row { margin-bottom: 12px; }
   .btn-add-main {
     width: 100%; padding: 14px 10px;
-    background: rgba(0,50,70,0.5);
-    border: 1px solid rgba(200,140,60,0.22);
-    border-radius: var(--radius-sm);
-    color: var(--accent2); font-family: 'Cinzel', serif;
-    font-size: 12px; font-weight: 400; letter-spacing: 1.5px;
+    background: rgba(0,50,70,0.5); border: 1px solid rgba(200,140,60,0.22);
+    border-radius: var(--radius-sm); color: var(--accent2);
+    font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 1.5px;
     cursor: pointer; backdrop-filter: blur(12px);
-    transition: background 0.2s, border-color 0.2s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .btn-add-main:active { background: rgba(0,70,90,0.6); border-color: rgba(200,140,60,0.45); }
+  .btn-add-main:active { background: rgba(0,70,90,0.6); }
 
   /* ── Small tiles ── */
   .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
@@ -221,16 +220,12 @@
   }
   .tile:active { background: rgba(0,50,70,0.5); }
   .tile-emoji { font-size: 20px; flex-shrink: 0; }
-  .tile-info {}
-  .tile-count { font-size: 16px; font-weight: 700; font-family: 'Cinzel', serif; color: rgba(140,160,180,0.6); }
-  .tile-count.accent { color: rgba(200,160,80,0.65); }
-  .tile-name { font-size: 9px; color: rgba(140,160,180,0.45); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+  .tile-name { font-size: 9px; color: rgba(140,160,180,0.45); letter-spacing: 1.5px; text-transform: uppercase; }
 
   /* ── Sync bar ── */
   .sync-bar {
     display: flex; align-items: center; justify-content: center; gap: 6px;
-    font-size: 10px; color: rgba(140,160,180,0.3);
-    letter-spacing: 0.5px; padding: 8px 0 4px;
+    font-size: 10px; color: rgba(140,160,180,0.3); letter-spacing: 0.5px; padding: 8px 0 4px;
   }
   .sync-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(140,160,180,0.25); transition: background 0.3s; }
   .sync-dot.ok      { background: rgba(92,184,92,0.45); }
@@ -254,7 +249,6 @@
     font-family: 'Lato', sans-serif; transition: color 0.15s;
   }
   .nav-btn.active { color: var(--accent2); }
-
   .page-padding { padding-bottom: 110px; }
 
   /* ── Overlay & Sheets ── */
@@ -274,20 +268,37 @@
   .sheet.open { transform: translateY(0); }
   .sheet-handle { width: 40px; height: 4px; background: rgba(140,160,180,0.2); border-radius: 2px; margin: 12px auto 20px; }
   .sheet-title { font-family: 'Cinzel', serif; font-size: 18px; margin-bottom: 20px; color: var(--text); letter-spacing: 1px; }
+  .sheet-subtitle { font-size: 12px; color: var(--steel); margin-bottom: 14px; font-weight: 300; opacity: 0.7; font-style: italic; }
 
+  /* ── Topic list ── */
   .topic-list { list-style: none; }
-  .topic-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(140,160,180,0.07); animation: fadeIn 0.25s ease; }
+  .topic-item { display: flex; align-items: center; gap: 10px; padding: 14px 0; border-bottom: 1px solid rgba(140,160,180,0.07); animation: fadeIn 0.25s ease; }
   .topic-item:last-child { border-bottom: none; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
   .topic-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: var(--accent); }
   .topic-dot.done { background: var(--teal); opacity: 0.45; }
-  .topic-item-text { flex: 1; font-size: 14px; color: var(--text); font-weight: 300; line-height: 1.4; }
-  .topic-item-text.done { color: var(--steel); text-decoration: line-through; opacity: 0.6; }
-  .btn-del { background: none; border: none; cursor: pointer; color: var(--steel); padding: 4px; opacity: 0.35; display: flex; }
+
+  .topic-item-body { flex: 1; min-width: 0; }
+  .topic-item-text { font-size: 14px; color: var(--text); font-weight: 300; line-height: 1.4; cursor: pointer; }
+  .topic-item-text.done { color: var(--steel); text-decoration: line-through; opacity: 0.6; cursor: default; }
+  .topic-item-meta { font-size: 10px; color: rgba(140,160,180,0.4); margin-top: 3px; letter-spacing: 0.3px; }
+  .topic-item-pensieri { font-size: 11px; color: rgba(200,160,80,0.55); margin-top: 3px; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .btn-pensieri-small {
+    background: none; border: none; cursor: pointer;
+    color: var(--accent2); padding: 4px; opacity: 0.45; display: flex; flex-shrink: 0;
+    font-size: 14px;
+  }
+  .btn-pensieri-small:active { opacity: 1; }
+  .btn-select { background: none; border: none; cursor: pointer; color: var(--accent2); padding: 4px; opacity: 0.5; display: flex; flex-shrink: 0; }
+  .btn-select:active { opacity: 1; }
+  .btn-del { background: none; border: none; cursor: pointer; color: var(--steel); padding: 4px; opacity: 0.35; display: flex; flex-shrink: 0; }
   .btn-del:active { color: var(--accent); opacity: 1; }
+
   .empty-list { text-align: center; padding: 32px 0; color: var(--steel); font-size: 13px; font-weight: 300; opacity: 0.6; }
 
+  /* ── Add form ── */
   .add-form { display: flex; gap: 10px; margin-bottom: 20px; }
   .add-input { flex: 1; background: rgba(0,50,70,0.45); border: 1px solid rgba(140,160,180,0.18); border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text); font-family: 'Lato', sans-serif; font-size: 14px; outline: none; }
   .add-input::placeholder { color: rgba(140,160,180,0.5); }
@@ -295,6 +306,25 @@
   .btn-confirm { background: var(--accent); border: none; border-radius: var(--radius-sm); padding: 12px 18px; color: #001020; font-size: 18px; cursor: pointer; font-weight: 700; }
   .btn-confirm:active { transform: scale(0.95); }
 
+  /* ── Pensieri sheet ── */
+  .pensieri-topic-name {
+    font-family: 'Cinzel', serif; font-size: 15px; color: var(--text);
+    margin-bottom: 6px; line-height: 1.4;
+  }
+  .pensieri-date { font-size: 11px; color: rgba(140,160,180,0.45); margin-bottom: 20px; letter-spacing: 0.5px; }
+  .pensieri-textarea {
+    width: 100%; min-height: 160px;
+    background: rgba(0,50,70,0.45); border: 1px solid rgba(140,160,180,0.18);
+    border-radius: var(--radius-sm); padding: 14px 16px;
+    color: var(--text); font-family: 'Lato', sans-serif; font-size: 14px;
+    line-height: 1.6; outline: none; resize: none;
+    transition: border-color 0.2s;
+  }
+  .pensieri-textarea::placeholder { color: rgba(140,160,180,0.4); font-style: italic; }
+  .pensieri-textarea:focus { border-color: rgba(200,140,60,0.45); }
+  .pensieri-saving { font-size: 11px; color: rgba(140,160,180,0.4); margin-top: 8px; text-align: right; letter-spacing: 0.5px; height: 16px; }
+
+  /* ── Settings ── */
   .settings-grid { display: grid; gap: 16px; }
   .setting-row { display: flex; flex-direction: column; gap: 8px; }
   .setting-label { font-size: 10px; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; }
@@ -313,7 +343,7 @@
 
 <script>
   // !! PASTE YOUR APPS SCRIPT URL BELOW !!
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3dy1tCWLhjIQDGj9YJ-SxY0OAB0a4KRPIP818zq94bdx5kPAcLDvsGM0h97kM4A3_/exec';
+  const SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
 </script>
 
 <div class="bubbles">
@@ -331,9 +361,7 @@
 <div class="app page-padding">
 
   <header>
-    <div class="app-icon">
-      <img src="icon-192.png" alt="Palombari">
-    </div>
+    <div class="app-icon"><img src="icon-192.png" alt="Palombari"></div>
     <h1 id="appTitle">Palombari</h1>
   </header>
 
@@ -341,10 +369,15 @@
   <div class="hero-card">
     <div class="dive-label">Il tuffo di oggi</div>
 
-    <div class="topic-area" id="topicArea">
+    <div class="topic-area">
       <div class="topic-placeholder" id="topicPlaceholder">— — —</div>
       <div class="topic-text" id="topicDisplay"></div>
-      <div class="remaining-badge" id="remainingBadge" style="display:none"></div>
+    </div>
+
+    <!-- Salta + Pensieri — only visible after extraction -->
+    <div class="hero-actions" id="heroActions">
+      <button class="btn-salta" onclick="saltaTopic()">Salta</button>
+      <button class="btn-pensieri" onclick="openPensieriSheet(-1)">✦ Pensieri</button>
     </div>
 
     <button class="btn-extract" id="btnExtract" onclick="extractTopic()" disabled>
@@ -363,23 +396,18 @@
     </button>
   </div>
 
-  <!-- Small tiles with emojis -->
+  <!-- Tiles -->
   <div class="tiles">
     <div class="tile" onclick="openSheet('available')">
       <div class="tile-emoji">🌊</div>
-      <div class="tile-info">
-        <div class="tile-name">Lista completa</div>
-      </div>
+      <div class="tile-info"><div class="tile-name">Lista completa</div></div>
     </div>
     <div class="tile" onclick="openSheet('discussed')">
       <div class="tile-emoji">🐚</div>
-      <div class="tile-info">
-        <div class="tile-name">Discorsi passati</div>
-      </div>
+      <div class="tile-info"><div class="tile-name">Discorsi passati</div></div>
     </div>
   </div>
 
-  <!-- Sync bar -->
   <div class="sync-bar">
     <div class="sync-dot loading" id="syncDot"></div>
     <span id="syncText">Connessione…</span>
@@ -393,16 +421,10 @@
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
     Home
   </button>
-  <button class="nav-btn" onclick="openSheet('available')">
-    🌊
-    <span>Lista</span>
-  </button>
-  <button class="nav-btn" onclick="openSheet('discussed')">
-    🐚
-    <span>Passati</span>
-  </button>
+  <button class="nav-btn" onclick="openSheet('available')">🌊<span>Lista</span></button>
+  <button class="nav-btn" onclick="openSheet('discussed')">🐚<span>Passati</span></button>
   <button class="nav-btn" onclick="openSheet('settings')">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     Stile
   </button>
 </nav>
@@ -438,6 +460,16 @@
   <p style="font-size:12px;color:var(--steel);line-height:1.7;margin-top:8px;font-weight:300;opacity:0.7;">
     Gli argomenti sono condivisi tra i due telefoni in tempo reale.
   </p>
+</div>
+
+<!-- Sheet: Pensieri -->
+<div class="sheet" id="sheetPensieri">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title">✦ Pensieri</div>
+  <div class="pensieri-topic-name" id="pensieriTopicName"></div>
+  <div class="pensieri-date" id="pensieriDate"></div>
+  <textarea class="pensieri-textarea" id="pensieriTextarea" placeholder="Scrivi qui i tuoi pensieri su questo discorso…" oninput="onPensieriInput()"></textarea>
+  <div class="pensieri-saving" id="pensieriSaving"></div>
 </div>
 
 <!-- Sheet: Stile -->
@@ -477,6 +509,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
+// ── API ──
 async function apiRead() {
   const r = await fetch(SCRIPT_URL);
   if (!r.ok) throw new Error('Read failed');
@@ -487,11 +520,28 @@ async function apiWrite(av, di) {
   if (!r.ok) throw new Error('Write failed');
 }
 
+// ── State ──
+// available: [{text}]
+// discussed: [{text, pensieri, date}]
 let available = [], discussed = [];
 let settings = JSON.parse(localStorage.getItem('app_settings') || 'null') || {
   title: 'Palombari', accent: '#c88c3c', bgTop: '#003050', bgBottom: '#000c1a'
 };
 
+// Current topic shown on hero (null if none)
+let currentHeroTopic = null; // index into discussed[], -1 = just extracted not yet in discussed
+
+// Pensieri editing state
+let pensieriIndex = null; // index in discussed[]
+let pensieriSaveTimer = null;
+
+// ── Date helper ──
+function todayString() {
+  const d = new Date();
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+// ── Sync ──
 function setSyncStatus(state, text) {
   document.getElementById('syncDot').className = 'sync-dot ' + state;
   document.getElementById('syncText').textContent = text;
@@ -526,6 +576,37 @@ async function saveData() {
   }
 }
 
+// ── Show topic on hero ──
+function showOnHero(topicText) {
+  const placeholder = document.getElementById('topicPlaceholder');
+  const display = document.getElementById('topicDisplay');
+  const actions = document.getElementById('heroActions');
+  placeholder.style.display = 'none';
+  display.style.display = 'block';
+  display.style.opacity = '0';
+  display.style.transform = 'translateY(10px)';
+  display.textContent = topicText;
+  setTimeout(() => {
+    display.style.opacity = '1';
+    display.style.transform = 'none';
+  }, 60);
+  actions.classList.add('visible');
+  saveTopicDisplay(topicText);
+}
+
+function clearHero() {
+  const placeholder = document.getElementById('topicPlaceholder');
+  const display = document.getElementById('topicDisplay');
+  const actions = document.getElementById('heroActions');
+  placeholder.style.display = '';
+  display.style.display = 'none';
+  display.textContent = '';
+  actions.classList.remove('visible');
+  resetTopicDisplay();
+  currentHeroTopic = null;
+}
+
+// ── Extract ──
 async function extractTopic() {
   if (!available.length) { showToast('Nessun argomento!'); return; }
   const btn = document.getElementById('btnExtract');
@@ -538,28 +619,16 @@ async function extractTopic() {
     discussed = fresh.discussed || [];
   } catch(e) {}
 
-  if (!available.length) { btn.classList.remove('spinning'); showToast('Nessun argomento!'); return; }
+  if (!available.length) { btn.classList.remove('spinning'); btn.disabled = false; showToast('Nessun argomento!'); return; }
 
   setTimeout(async () => {
     const idx = Math.floor(Math.random() * available.length);
     const topic = available.splice(idx, 1)[0];
-    discussed.unshift(topic);
+    const entry = { text: topic.text || topic, pensieri: '', date: todayString() };
+    discussed.unshift(entry);
+    currentHeroTopic = 0; // just added at front
 
-    const placeholder = document.getElementById('topicPlaceholder');
-    const display = document.getElementById('topicDisplay');
-    placeholder.style.display = 'none';
-    display.style.display = 'block';
-    display.style.opacity = '0';
-    display.style.transform = 'translateY(10px)';
-    display.textContent = topic;
-    setTimeout(() => {
-      display.style.opacity = '1';
-      display.style.transform = 'none';
-    }, 60);
-
-    const badge = document.getElementById('remainingBadge');
-    badge.style.display = 'none';
-
+    showOnHero(entry.text);
     renderAll();
     btn.classList.remove('spinning');
     btn.disabled = available.length === 0;
@@ -568,6 +637,41 @@ async function extractTopic() {
   }, 700);
 }
 
+// ── Select manually ──
+async function selectTopic(i) {
+  const topicText = available[i].text || available[i];
+  available.splice(i, 1);
+  const entry = { text: topicText, pensieri: '', date: todayString() };
+  discussed.unshift(entry);
+  currentHeroTopic = 0;
+
+  showOnHero(topicText);
+  renderAll();
+
+  const btn = document.getElementById('btnExtract');
+  btn.disabled = available.length === 0;
+  document.getElementById('btnText').textContent = available.length === 0 ? 'Finiti!' : 'E andiamo!';
+
+  closeSheet();
+  showToast('Argomento scelto!');
+  await saveData();
+}
+
+// ── Salta ──
+async function saltaTopic() {
+  if (currentHeroTopic === null) return;
+  // Move back to available — take from discussed
+  const entry = discussed.splice(currentHeroTopic, 1)[0];
+  available.push(entry.text || entry);
+  clearHero();
+  renderAll();
+  document.getElementById('btnExtract').disabled = false;
+  document.getElementById('btnText').textContent = 'E andiamo!';
+  showToast('Argomento rimandato!');
+  await saveData();
+}
+
+// ── Add topic ──
 async function addTopic(inputId) {
   const inp = document.getElementById(inputId);
   const val = inp.value.trim();
@@ -581,6 +685,7 @@ async function addTopic(inputId) {
   await saveData();
 }
 
+// ── Delete ──
 async function deleteTopic(i) {
   available.splice(i, 1);
   renderAll();
@@ -588,9 +693,10 @@ async function deleteTopic(i) {
   await saveData();
 }
 
+// ── Restore ──
 async function restoreTopic(i) {
-  const t = discussed.splice(i, 1)[0];
-  available.push(t);
+  const entry = discussed.splice(i, 1)[0];
+  available.push(entry.text || entry);
   renderAll();
   document.getElementById('btnExtract').disabled = false;
   document.getElementById('btnText').textContent = 'E andiamo!';
@@ -598,17 +704,62 @@ async function restoreTopic(i) {
   await saveData();
 }
 
-function renderAll() { renderAvailable(); renderDiscussed(); updateCounts(); }
+// ── Pensieri ──
+function openPensieriSheet(idx) {
+  // idx = index in discussed[], or -1 for current hero (which is discussed[0] after extraction)
+  const realIdx = idx === -1 ? 0 : idx;
+  if (realIdx >= discussed.length) return;
+  pensieriIndex = realIdx;
+  const entry = discussed[realIdx];
+
+  document.getElementById('pensieriTopicName').textContent = entry.text || entry;
+  document.getElementById('pensieriDate').textContent = entry.date ? `Discusso il ${entry.date}` : '';
+  document.getElementById('pensieriTextarea').value = entry.pensieri || '';
+  document.getElementById('pensieriSaving').textContent = '';
+
+  openSheet('pensieri');
+}
+
+function onPensieriInput() {
+  clearTimeout(pensieriSaveTimer);
+  document.getElementById('pensieriSaving').textContent = 'Salvataggio…';
+  pensieriSaveTimer = setTimeout(savePensieri, 1500);
+}
+
+async function savePensieri() {
+  if (pensieriIndex === null) return;
+  const val = document.getElementById('pensieriTextarea').value;
+  if (!discussed[pensieriIndex]) return;
+  discussed[pensieriIndex].pensieri = val;
+  try {
+    await apiWrite(available, discussed);
+    document.getElementById('pensieriSaving').textContent = 'Salvato ✓';
+    setTimeout(() => { document.getElementById('pensieriSaving').textContent = ''; }, 2000);
+  } catch(e) {
+    document.getElementById('pensieriSaving').textContent = 'Errore nel salvataggio';
+  }
+}
+
+// ── Render ──
+function renderAll() { renderAvailable(); renderDiscussed(); }
 
 function renderAvailable() {
   const ul = document.getElementById('availableList');
   ul.innerHTML = '';
   if (!available.length) { ul.innerHTML = '<li class="empty-list">Nessun argomento — aggiungine uno!</li>'; return; }
   available.forEach((t, i) => {
+    const text = t.text || t;
     const li = document.createElement('li');
     li.className = 'topic-item';
-    li.innerHTML = `<div class="topic-dot"></div><span class="topic-item-text">${esc(t)}</span>
-      <button class="btn-del" onclick="deleteTopic(${i})">
+    li.innerHTML = `
+      <div class="topic-dot"></div>
+      <div class="topic-item-body">
+        <div class="topic-item-text" onclick="selectTopic(${i})">${esc(text)}</div>
+      </div>
+      <button class="btn-select" onclick="selectTopic(${i})" title="Scegli">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <button class="btn-del" onclick="deleteTopic(${i})" title="Elimina">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
       </button>`;
     ul.appendChild(li);
@@ -619,10 +770,20 @@ function renderDiscussed() {
   const ul = document.getElementById('discussedList');
   ul.innerHTML = '';
   if (!discussed.length) { ul.innerHTML = '<li class="empty-list">Nessun discorso ancora.</li>'; return; }
-  discussed.forEach((t, i) => {
+  discussed.forEach((entry, i) => {
+    const text = entry.text || entry;
+    const pensieri = entry.pensieri || '';
+    const date = entry.date || '';
     const li = document.createElement('li');
     li.className = 'topic-item';
-    li.innerHTML = `<div class="topic-dot done"></div><span class="topic-item-text done">${esc(t)}</span>
+    li.innerHTML = `
+      <div class="topic-dot done"></div>
+      <div class="topic-item-body">
+        <div class="topic-item-text done">${esc(text)}</div>
+        ${date ? `<div class="topic-item-meta">${date}</div>` : ''}
+        ${pensieri ? `<div class="topic-item-pensieri">${esc(pensieri.substring(0,60))}${pensieri.length > 60 ? '…' : ''}</div>` : ''}
+      </div>
+      <button class="btn-pensieri-small" onclick="openPensieriSheet(${i})" title="Pensieri">✦</button>
       <button class="btn-del" onclick="restoreTopic(${i})" title="Ripristina">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
       </button>`;
@@ -630,15 +791,43 @@ function renderDiscussed() {
   });
 }
 
-function updateCounts() {
-  document.getElementById('availableCount').textContent = available.length;
-  document.getElementById('discussedCount').textContent = discussed.length;
+// ── 10-hour reset ──
+const TEN_HOURS = 10 * 60 * 60 * 1000;
+function checkTopicExpiry() {
+  const saved = localStorage.getItem('topic_shown_at');
+  if (saved && Date.now() - parseInt(saved) > TEN_HOURS) clearHero();
 }
+function saveTopicDisplay(topic) {
+  localStorage.setItem('topic_shown_at', Date.now().toString());
+  localStorage.setItem('topic_shown_text', topic);
+}
+function resetTopicDisplay() {
+  localStorage.removeItem('topic_shown_at');
+  localStorage.removeItem('topic_shown_text');
+}
+function restoreTopicDisplay() {
+  const saved = localStorage.getItem('topic_shown_text');
+  const savedAt = localStorage.getItem('topic_shown_at');
+  if (!saved || !savedAt) return;
+  if (Date.now() - parseInt(savedAt) > TEN_HOURS) { resetTopicDisplay(); return; }
+  const placeholder = document.getElementById('topicPlaceholder');
+  const display = document.getElementById('topicDisplay');
+  const actions = document.getElementById('heroActions');
+  placeholder.style.display = 'none';
+  display.style.display = 'block';
+  display.style.opacity = '1';
+  display.style.transform = 'none';
+  display.textContent = saved;
+  actions.classList.add('visible');
+  currentHeroTopic = 0;
+}
+setInterval(checkTopicExpiry, 60 * 1000);
 
+// ── Sheets ──
 let currentSheet = null;
 function openSheet(name) {
-  if (currentSheet) closeSheet();
-  const ids = { available:'sheetAvailable', discussed:'sheetDiscussed', add:'sheetAdd', settings:'sheetSettings' };
+  if (currentSheet) { currentSheet.classList.remove('open'); currentSheet = null; }
+  const ids = { available:'sheetAvailable', discussed:'sheetDiscussed', add:'sheetAdd', pensieri:'sheetPensieri', settings:'sheetSettings' };
   const el = document.getElementById(ids[name]);
   document.getElementById('overlay').classList.add('open');
   el.classList.add('open');
@@ -646,13 +835,16 @@ function openSheet(name) {
   if (name === 'available') { renderAvailable(); setTimeout(() => document.getElementById('addInputTop').focus(), 400); }
   if (name === 'discussed') renderDiscussed();
   if (name === 'add') setTimeout(() => document.getElementById('addInputMain').focus(), 400);
+  if (name === 'pensieri') setTimeout(() => document.getElementById('pensieriTextarea').focus(), 400);
   if (name === 'settings') populateSettingsForm();
 }
 function closeSheet() {
+  if (pensieriSaveTimer) { clearTimeout(pensieriSaveTimer); savePensieri(); }
   if (currentSheet) { currentSheet.classList.remove('open'); currentSheet = null; }
   document.getElementById('overlay').classList.remove('open');
 }
 
+// ── Settings ──
 function populateSettingsForm() {
   document.getElementById('settingTitle').value  = settings.title;
   document.getElementById('colorAccent').value   = settings.accent;
@@ -665,9 +857,7 @@ function saveSettings() {
   settings.bgTop    = document.getElementById('colorBgTop').value;
   settings.bgBottom = document.getElementById('colorBgBottom').value;
   localStorage.setItem('app_settings', JSON.stringify(settings));
-  applySettings();
-  closeSheet();
-  showToast('Stile salvato!');
+  applySettings(); closeSheet(); showToast('Stile salvato!');
 }
 function applySettings() {
   document.getElementById('appTitle').textContent = settings.title;
@@ -677,7 +867,8 @@ function applySettings() {
   document.title = settings.title;
 }
 
-function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// ── Helpers ──
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
@@ -689,6 +880,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet()
 setInterval(loadData, 30000);
 applySettings();
 populateSettingsForm();
+checkTopicExpiry();
+restoreTopicDisplay();
 loadData();
 </script>
 </body>
