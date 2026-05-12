@@ -313,7 +313,7 @@
 
 <script>
   // !! PASTE YOUR APPS SCRIPT URL BELOW !!
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3dy1tCWLhjIQDGj9YJ-SxY0OAB0a4KRPIP818zq94bdx5kPAcLDvsGM0h97kM4A3_/exec';
+  const SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
 </script>
 
 <div class="bubbles">
@@ -368,14 +368,12 @@
     <div class="tile" onclick="openSheet('available')">
       <div class="tile-emoji">🌊</div>
       <div class="tile-info">
-        <div class="tile-count accent" id="availableCount">–</div>
         <div class="tile-name">Lista completa</div>
       </div>
     </div>
     <div class="tile" onclick="openSheet('discussed')">
       <div class="tile-emoji">🐚</div>
       <div class="tile-info">
-        <div class="tile-count" id="discussedCount">–</div>
         <div class="tile-name">Discorsi passati</div>
       </div>
     </div>
@@ -560,10 +558,7 @@ async function extractTopic() {
     }, 60);
 
     const badge = document.getElementById('remainingBadge');
-    badge.style.display = 'block';
-    badge.textContent = available.length === 0
-      ? 'Tutti esplorati!'
-      : `${available.length} rimanent${available.length !== 1 ? 'i' : 'e'}`;
+    badge.style.display = 'none';
 
     renderAll();
     btn.classList.remove('spinning');
